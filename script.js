@@ -3,7 +3,7 @@
  * Desarrollado con modularidad limpia para entornos académicos rígidos.
  */
 
-// --- BASE DE DATOS DE CONOCIMIENTO (ESTÁTICA) ---
+// --- BASE DE DATOS DE CONOCIMIENTO ---
 const SKIN_QUIZ = [
     {
         id: 1,
@@ -30,7 +30,7 @@ const SKIN_QUIZ = [
         question: "¿Cuál es la respuesta de su barrera epidérmica ante factores de estrés térmico o uso de fragancias?",
         options: [
             { text: "Tolerancia óptima; no se aprecian alteraciones homeostáticas.", points: { grasa: 2, mixta: 2 } },
-            { text: "Deshidratación acelarada que obliga a reponer lípidos en crema.", points: { seca: 3 } },
+            { text: "Deshidratación acelerada que obliga a reponer lípidos en crema.", points: { seca: 3 } },
             { text: "Pérdida inmediata de la función barrera, enrojecimiento difuso y escozor.", points: { sensible: 4 } }
         ]
     }
@@ -124,7 +124,7 @@ function renderTip() {
     if(el) el.innerText = randomTip;
 }
 
-// --- DESARROLLO DEL CUESTIONARIO CON PASOS EXPLÍCITOS ---
+// --- DESARROLLO DEL CUESTIONARIO ---
 function renderQuiz() {
     const quizBody = document.getElementById('quiz-body');
     const counterEl = document.getElementById('quiz-counter');
@@ -139,7 +139,6 @@ function renderQuiz() {
     const currentQuiz = SKIN_QUIZ[currentStep];
     const totalQuestions = SKIN_QUIZ.length;
     
-    // 3. Actualización de Indicadores de Progreso Numéricos
     const calculatedPercentage = Math.round((currentStep / totalQuestions) * 100);
     if(counterEl) counterEl.innerText = `Pregunta ${currentStep + 1} de ${totalQuestions}`;
     if(percentageEl) percentageEl.innerText = `${calculatedPercentage}%`;
@@ -190,14 +189,12 @@ function executeDashboardDisplay(type) {
     document.getElementById('result-title').innerText = profile.title;
     document.getElementById('result-description').innerText = profile.description;
 
-    // Reglas Clínicas
     const guidelinesList = document.getElementById('result-guidelines-list');
     guidelinesList.innerHTML = "";
     profile.guidelines.forEach(guide => {
         guidelinesList.innerHTML += `<li>${guide}</li>`;
     });
 
-    // Métricas de Superficie
     document.getElementById('txt-hydration').innerText = `${profile.metrics.hydration}%`;
     document.getElementById('txt-sensitivity').innerText = `${profile.metrics.sensitivity}%`;
     document.getElementById('txt-sebum').innerText = `${profile.metrics.sebum}%`;
@@ -208,7 +205,6 @@ function executeDashboardDisplay(type) {
         document.getElementById('bar-sebum').style.width = `${profile.metrics.sebum}%`;
     }, 100);
 
-    // Rutinas Paralelas
     const morningOl = document.getElementById('routine-morning-steps');
     const nightOl = document.getElementById('routine-night-steps');
     morningOl.innerHTML = "";
@@ -216,7 +212,6 @@ function executeDashboardDisplay(type) {
     profile.morning.forEach(step => morningOl.innerHTML += `<li>${step}</li>`);
     profile.night.forEach(step => nightOl.innerHTML += `<li>${step}</li>`);
 
-    // Chips
     const chipsBox = document.getElementById('target-ingredients-chips');
     chipsBox.innerHTML = "";
     profile.ingredients.forEach(ing => {
@@ -227,7 +222,7 @@ function executeDashboardDisplay(type) {
     resultsSec.scrollIntoView({ behavior: 'smooth' });
 }
 
-// --- PERSISTENCIA LOCAL (LOCALSTORAGE) ---
+// --- PERSISTENCIA LOCAL ---
 function checkSavedAnalysis() {
     const record = localStorage.getItem('gg_clinical_profile');
     const banner = document.getElementById('history-banner');
@@ -241,7 +236,7 @@ function checkSavedAnalysis() {
     }
 }
 
-// --- EVENTOS GENERALES ---
+// --- EVENTOS INTERACTIVOS Y MENÚ MÓVIL ---
 function setupCoreEvents() {
     // Reiniciar Cuestionario
     document.getElementById('reset-test-btn').addEventListener('click', () => {
@@ -252,25 +247,44 @@ function setupCoreEvents() {
         document.getElementById('test').scrollIntoView({ behavior: 'smooth' });
     });
 
-    // Enlaces de navegación con scroll controlado
+    // Enlaces de navegación con scroll controlado y auto-cierre en móvil
+    const navMenu = document.getElementById('nav-menu');
     const bindScroll = (triggerId, targetId) => {
         const trigger = document.getElementById(triggerId);
         if (trigger) {
             trigger.addEventListener('click', (e) => {
                 e.preventDefault();
                 document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                if (navMenu && navMenu.classList.contains('mobile-active')) {
+                    navMenu.classList.remove('mobile-active');
+                }
             });
         }
     };
     bindScroll('hero-start-btn', 'test');
     bindScroll('nav-test-trigger', 'test');
+    
+    // Auto-cierre dinámico en celular al presionar enlaces nativos del menú
+    const links = navMenu ? navMenu.querySelectorAll('a') : [];
+    links.forEach(link => {
+        const targetId = link.getAttribute('href').substring(1);
+        if (targetId && document.getElementById(targetId)) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                if (navMenu.classList.contains('mobile-active')) {
+                    navMenu.classList.remove('mobile-active');
+                }
+            });
+        }
+    });
 
-    // Menú Hamburguesa para Móviles
+    // Menú Hamburguesa Funcional para Dispositivos Móviles
     const burger = document.getElementById('burger-menu');
-    const navMenu = document.getElementById('nav-menu');
-    if(burger && navMenu) {
-        burger.addEventListener('click', () => {
-            navMenu.style.display = (navMenu.style.display === 'flex') ? 'none' : 'flex';
+    if (burger && navMenu) {
+        burger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('mobile-active');
         });
     }
 }

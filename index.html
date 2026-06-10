@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlowGuide | Sistema de Análisis Dérmico Profesional</title>
     
-    <!-- 1. Favicon Profesional Nativo (SVG Vectorial) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%236C5CE7%22 opacity=%220.1%22/><path d=%22M50,25 C65,45 65,65 50,80 C35,65 35,45 50,25 Z%22 fill=%22%236C5CE7%22/><circle cx=%2250%22 cy=%2245%22 r=%224%22 fill=%22%23FFF%22/></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +14,6 @@
 </head>
 <body>
 
-    <!-- Navegación Premium Minimalista -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">Glow<span class="serif">Guide</span></a>
@@ -34,7 +32,6 @@
         </div>
     </nav>
 
-    <!-- 1. Hero Principal -->
     <header id="inicio" class="hero-section">
         <div class="hero-container">
             <div class="hero-content">
@@ -57,7 +54,6 @@
         </div>
     </header>
 
-    <!-- Historial Local Inteligente -->
     <div id="history-banner" class="history-banner hidden">
         <div class="history-container">
             <p class="history-text">🧬 Detectamos un diagnóstico previo en este dispositivo: <strong id="history-skin-name">Piel...</strong></p>
@@ -65,7 +61,6 @@
         </div>
     </div>
 
-    <!-- 2. Test / Cuestionario Interactivo -->
     <section id="test" class="test-section">
         <div class="container-sm">
             <div class="section-header">
@@ -75,7 +70,6 @@
             </div>
 
             <div class="quiz-card">
-                <!-- 3. Indicador de progreso avanzado con contador textual -->
                 <div class="progress-meta">
                     <span id="quiz-counter" class="quiz-counter">Pregunta 1 de 3</span>
                     <span id="quiz-percentage" class="quiz-percentage">0%</span>
@@ -84,13 +78,11 @@
                     <div class="progress-fill" id="quiz-progress"></div>
                 </div>
                 <div id="quiz-body">
-                    <!-- Contenido inyectado dinámicamente -->
-                </div>
+                    </div>
             </div>
         </div>
     </section>
 
-    <!-- 3, 4 y 5. Panel de Resultados Inteligentes (Oculto inicialmente) -->
     <section id="results-section" class="results-section hidden">
         <div class="container">
             <div class="section-header">
@@ -100,7 +92,6 @@
             </div>
 
             <div class="results-dashboard">
-                <!-- Columna de Diagnóstico Fisiológico -->
                 <div class="dashboard-card profile-card">
                     <div class="card-meta">Perfil Determinado</div>
                     <h3 id="result-title">Tipo de Piel</h3>
@@ -112,7 +103,6 @@
                     </div>
                 </div>
 
-                <!-- Columna de Métricas -->
                 <div class="dashboard-card metrics-card">
                     <h3>Métricas de Superficie Epidérmica</h3>
                     
@@ -142,7 +132,6 @@
                 </div>
             </div>
 
-            <!-- 4. Cronograma de Rutina Personalizada -->
             <div class="routine-block">
                 <h3 class="block-title">Cronograma de Aplicación Diaria</h3>
                 <div class="routine-grid">
@@ -170,7 +159,6 @@
                 </div>
             </div>
 
-            <!-- 5. Recomendación de Ingredientes -->
             <div class="ingredients-block">
                 <h4>Activos Cosmecéuticos Recomendados:</h4>
                 <div id="target-ingredients-chips" class="chips-flex"></div>
@@ -182,10 +170,8 @@
         </div>
     </section>
 
-    <!-- 6. Glosario de Ingredientes (Con Animación de Entrada) -->
     <section id="glosario" class="glosario-section reveal-on-scroll">
         <div class="container">
-            <!-- 5. Split de Introducción Educativa con Imagen Secundaria -->
             <div class="educational-intro">
                 <div class="edu-text">
                     <span class="section-tag">Diccionario Técnico</span>
@@ -193,18 +179,15 @@
                     <p>Consulte la función molecular, categoría y compatibilidad de los principales ingredientes activos del mercado actual. Entender la formulación es el primer paso para una rutina exitosa.</p>
                 </div>
                 <div class="edu-graphic">
-                    <!-- Imagen Secundaria de Soporte Científico -->
-                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" alt="Textura de sérum cosmético en laboratorio" class="edu-img">
+                    <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80" alt="Textura de sérum cosmético en laboratorio" class="edu-img">
                 </div>
             </div>
 
             <div class="glosario-grid" id="glosario-grid">
-                <!-- Tarjetas generadas dinámicamente -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- Modal Técnico de Detalle -->
     <div class="modal-overlay" id="ingredient-modal">
         <div class="modal-box">
             <button class="modal-close" id="modal-close-btn" aria-label="Cerrar ventana">&times;</button>
@@ -218,7 +201,6 @@
         </div>
     </div>
 
-    <!-- 7. Mitos y Realidades (Con Animación de Entrada) -->
     <section id="mitos" class="mitos-section reveal-on-scroll">
         <div class="container-sm">
             <div class="section-header">
@@ -228,12 +210,10 @@
             </div>
 
             <div class="accordion-container" id="mitos-accordion">
-                <!-- Acordeón inyectado por JavaScript -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- 10. Integración de Telegram (Con Animación de Entrada) -->
     <section id="telegram" class="telegram-section reveal-on-scroll">
         <div class="container">
             <div class="telegram-card">
@@ -261,7 +241,6 @@
         </div>
     </section>
 
-    <!-- 2. Footer Estructurado y Completo -->
     <footer class="main-footer">
         <div class="footer-grid container">
             <div class="footer-about">
@@ -277,7 +256,7 @@
                     <span class="meta-label">Autoría</span>
                     <span class="meta-value">Selena Guijosa</span>
                 </div>
-                           </div>
+            </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 GlowGuide. Todos los derechos reservados de diseño e ingeniería de software.</p>

@@ -1,0 +1,23 @@
+{
+  "name": "glowguide-webservice",
+  "version": "1.0.0",
+  "description": "Sistema de Análisis Dérmico Profesional - GlowGuide",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "glowguide",
+    "skincare",
+    "express",
+    "render"
+  ],
+  "author": "Selena Guijosa",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

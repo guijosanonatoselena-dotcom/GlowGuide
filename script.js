@@ -244,10 +244,27 @@ function checkSavedAnalysis() {
 }
 
 function setupCoreEvents() {
-    const navMenu = document.getElementById('nav-menu');
-    const burger = document.getElementById('burger-menu');
+    // 1. EVENTO BOTÓN EXPLORAR ACTIVOS (Prioridad Absoluta)
+    const exploreBtn = document.getElementById('hero-explore-btn');
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateTo('glosario');
+        });
+    }
+
+    // 2. BOTÓN COMENZAR DIAGNÓSTICO
+    const startBtn = document.getElementById('hero-start-btn');
+    if (startBtn) {
+        startBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('test');
+        });
+    }
 
     // Manejo de clicks en el Navbar SPA
+    const navMenu = document.getElementById('nav-menu');
     if (navMenu) {
         const links = navMenu.querySelectorAll('a');
         links.forEach(link => {
@@ -264,24 +281,6 @@ function setupCoreEvents() {
         });
     }
 
-    // SE CORRIGIÓ: Evento para el botón Explorar Activos del Hero
-    const exploreBtn = document.getElementById('hero-explore-btn');
-    if (exploreBtn) {
-        exploreBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigateTo('glosario'); // Te lleva directo a la vista SPA del Glosario
-        });
-    }
-
-    // Botón comenzar diagnóstico
-    const startBtn = document.getElementById('hero-start-btn');
-    if (startBtn) {
-        startBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigateTo('test');
-        });
-    }
-
     // Reiniciar Cuestionario
     const resetBtn = document.getElementById('reset-test-btn');
     if (resetBtn) {
@@ -295,6 +294,7 @@ function setupCoreEvents() {
         });
     }
 
+    const burger = document.getElementById('burger-menu');
     if (burger && navMenu) {
         burger.addEventListener('click', (e) => {
             e.stopPropagation();

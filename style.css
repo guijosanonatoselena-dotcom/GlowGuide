@@ -1266,3 +1266,25 @@ body {
         gap: 20px;
     }
 }
+/* Corrección exclusiva para la visibilidad de la imagen del glosario en celulares */
+@media (max-width: 768px) {
+    .educational-intro {
+        display: flex;
+        flex-direction: column-reverse; /* Coloca la imagen arriba o abajo del texto según prefieras */
+        gap: 20px;
+    }
+
+    .edu-graphic {
+        display: block !important; /* Fuerza a que el contenedor no se oculte */
+        width: 100% !important;
+        height: 200px; /* Define una altura fija y cómoda para pantallas de celular */
+    }
+
+    .edu-img {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover; /* Evita que la imagen se deforme o se estire */
+        border-radius: 12px; /* Mantiene la estética limpia de tus tarjetas */
+    }
+}

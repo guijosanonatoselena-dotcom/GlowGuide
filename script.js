@@ -1,6 +1,5 @@
 /**
  * GlowGuide - Core Engine del Sistema de Análisis Dérmico
- * Desarrollado con modularidad limpia para entornos académicos rígidos.
  */
 
 // --- BASE DE DATOS DE CONOCIMIENTO ---
@@ -19,7 +18,7 @@ const SKIN_QUIZ = [
         id: 2,
         question: "¿Cuál es el nivel de incidencia de poros dilatados e imperfecciones comedogénicas?",
         options: [
-            { text: "Presencia recurrente de comedones inflamatorios difusos por todo el tejido.", points: { grasa: 3 } },
+            { text: "Presencia recurrentes de comedones inflamatorios difusos por todo el tejido.", points: { grasa: 3 } },
             { text: "Poros dilatados perceptibles únicamente en la región centrofacial (frente y nariz).", points: { mixta: 3 } },
             { text: "Poros cerrados, textura fina, sin brotes sebáceos visibles.", points: { seca: 3, sensible: 1 } },
             { text: "Brotes mínimos, pero reactividad severa (inflamación) al aplicar fórmulas estándar.", points: { sensible: 3 } }
@@ -39,7 +38,7 @@ const SKIN_QUIZ = [
 const PROFILES_MATRIX = {
     grasa: {
         title: "Piel Grasa (Hiperseborrea Epidérmica)",
-        description: "Se caracteriza por una hiperactividad de las glándulas sebáceas. Presenta un estrato córneo engrosado, poros pilosebáceos visibles y tendencia a lesiones acnéicas. Posee una alta protección natural frente al envejecimiento extrínseco.",
+        description: "Se caracteriza por una hiperactividad de las glándulas sebáceas. Presenta un estrato córneo engrosado, poros pilosebáceos visibles y tendencia a lesiones acnéicas.",
         guidelines: ["Utilizar syndets o geles limpiadores seboreguladores.", "Introducir hidroxiácidos para evitar la retención querolítica dentro del poro.", "No prescindir de la hidratación; priorizar vehículos fluidos con base acuosa."],
         metrics: { hydration: 55, sensitivity: 35, sebum: 95 },
         ingredients: ["Ácido salicílico", "Niacinamida", "Centella Asiática"],
@@ -48,7 +47,7 @@ const PROFILES_MATRIX = {
     },
     seca: {
         title: "Piel Seca (Alipídica)",
-        description: "Presentas un déficit quantitative de lípidos estructurales en la barrera córnea. Esto compromete la retención de agua transepidérmica, derivando en un tejido con tendencia a líneas finas, opacidad y descamación.",
+        description: "Presentas un déficit cuantitativo de lípidos estructurales en la barrera córnea. Esto compromete la retención de agua transepidérmica, derivando en un tejido con tendencia a líneas finas.",
         guidelines: ["Evitar agentes tensioactivos agresivos o limpiadores espumosos.", "Aportar fórmulas ricas en ácidos grasos y ceramidas para sellar la barrera.", "Aplicar humectantes sobre el tejido ligeramente húmedo."],
         metrics: { hydration: 25, sensitivity: 45, sebum: 15 },
         ingredients: ["Ácido hialurónico", "Ceramidas", "Péptidos"],
@@ -57,7 +56,7 @@ const PROFILES_MATRIX = {
     },
     mixta: {
         title: "Piel Mixta (Heterogeneidad Cutánea)",
-        description: "Manifiesta una distribución topográfica irregular de las glándulas sebáceas. Coexiste una actividad lipídica elevada en la zona T con áreas normales o deshidratadas en las regiones periféricas (mejillas).",
+        description: "Manifiesta una distribución topográfica irregular de las glándulas sebáceas. Coexiste una actividad lipídica elevada en la zona T con áreas normales o deshidratadas en las regiones periféricas.",
         guidelines: ["Establecer un equilibrio de texturas según la zona facial.", "Utilizar activos versátiles que modulen el sebo sin deshidratar.", "Realizar limpieza meticulosa en la zona central."],
         metrics: { hydration: 65, sensitivity: 40, sebum: 60 },
         ingredients: ["Niacinamida", "Ácido hialurónico", "Vitamina C"],
@@ -66,7 +65,7 @@ const PROFILES_MATRIX = {
     },
     sensible: {
         title: "Piel Sensible (Barrera Cutánea Incompetente)",
-        description: "Presenta una alteración en la función barrera junto con una hiperexcitabilidad neurosensorial. Reacciona de forma exacerbada a estímulos que en pieles normales no desencadenan respuestas.",
+        description: "Presenta una alteración en la función barrera junto con una hiperexcitabilidad neurosensorial. Reacciona de forma exacerbada a estímulos estándar.",
         guidelines: ["Suprimir el uso de perfumes, alcoholes desnaturalizados y aceites esenciales.", "Limitar el número de activos concurrentes en la rutina (minimalismo).", "Priorizar agentes calmantes y reepitelizantes."],
         metrics: { hydration: 45, sensitivity: 90, sebum: 35 },
         ingredients: ["Centella Asiática", "Ceramidas", "Ácido hialurónico"],
@@ -76,27 +75,22 @@ const PROFILES_MATRIX = {
 };
 
 const GLOSSARY_DB = [
-    { name: "Niacinamida", cat: "Vitamina B3 / Antioxidante", desc: "Refuerza la síntesis de ceramidas endógenas, reduce la transferencia de melanosomas mitigando manchas, calma la inflamación y regula la secreción sebácea de forma segura.", target: "Grasa, Mixta, Sensible" },
-    { name: "Ácido hialurónico", cat: "Polisacárido Humectante", desc: "Macromolécula capaz de retener agua en el espacio extracelular. Aumenta la turgencia cutánea y optimiza los niveles de hidratación sin aportar carga lipídica.", target: "Todos los biotipos cutáneos" },
-    { name: "Retinol", cat: "Retinoide / Renovador", desc: "Estimula la renovación del queratinocito y aumenta la producción de colágeno dérmico. Trata eficazmente el crono y fotoenvejecimiento, mejorando la textura general.", target: "Seca, Mixta, Grasa (Introducción progresiva)" },
-    { name: "Vitamina C", cat: "Ácido Ascórbico / Antioxidante", desc: "Neutraliza las especies reactivas de oxígeno provocadas por la radiación UV. Interviene en la síntesis de colágeno y ejerce una acción aclarante en hiperpigmentaciones.", target: "Todos los biotipos cutáneos" },
-    { name: "Ceramidas", cat: "Lípidos Intercelulares", desc: "Esenciales para el mantenimiento de la cohesión del estrato córneo. Restauran la barrera lipídica dañada, evitando la pérdida de agua transepidérmica (TEWL).", target: "Seca, Sensible, Con función barrera alterada" },
-    { name: "Ácido salicílico", cat: "Beta-Hidroxiácido (BHA)", desc: "Exfoliante químico de naturaleza liposoluble. Penetra de forma selectiva en los poros obstruidos, realizando una limpieza profunda de detritos y sebo acumulado.", target: "Grasa, Mixta, Con tendencia al acné" },
-    { name: "Péptidos", cat: "Fracciones de Aminoácidos", desc: "Cadenas peptídicas que actúan como mensajeros de señalización celular. Indican a los fibroblastos que sinteticen nuevas fibras elásticas y colágeno.", target: "Seca, Madura" },
-    { name: "Centella Asiática", cat: "Extracto Botánico Fitoterapéutico", desc: "Rica en madecasósidos. Posee propiedades analgésicas, antiinflamatorias y reparadoras celulares. Acelera los procesos de cicatrización cutánea.", target: "Sensible, Irritada, Con imperfecciones" }
+    { name: "Niacinamida", cat: "Vitamina B3 / Antioxidante", desc: "Refuerza la síntesis de ceramidas endógenas, reduce la transferencia de melanosomas mitigando manchas, calma la inflamación y regula la secreción sebácea.", target: "Grasa, Mixta, Sensible" },
+    { name: "Ácido hialurónico", cat: "Polisacárido Humectante", desc: "Macromolécula capaz de retener agua en el espacio extracelular. Aumenta la turgencia cutánea sin aportar carga lipídica.", target: "Todos los biotipos cutáneos" },
+    { name: "Retinol", cat: "Retinoide / Renovador", desc: "Estimula la renovación del queratinocito y aumenta la producción de colágeno dérmico. Trata eficazmente el crono y fotoenvejecimiento.", target: "Seca, Mixta, Grasa" },
+    { name: "Vitamina C", cat: "Ácido Ascórbico / Antioxidante", desc: "Neutraliza las especies reactivas de oxígeno provocadas por la radiación UV e interviene en la síntesis de colágeno.", target: "Todos los biotipos cutáneos" },
+    { name: "Ceramidas", cat: "Lípidos Intercelulares", desc: "Esenciales para el mantenimiento de la cohesión del estrato córneo. Restauran la barrera lipídica dañada.", target: "Seca, Sensible" },
+    { name: "Ácido salicílico", cat: "Beta-Hidroxiácido (BHA)", desc: "Exfoliante químico de naturaleza liposoluble. Penetra de forma selectiva en los poros obstruidos, realizando una limpieza profunda.", target: "Grasa, Mixta" }
 ];
 
 const MYTHS_ACCORDION = [
-    { mito: "Las pieles grasas no requieren hidratación externa.", realidad: "Falso. La seborrea hace alusión a un exceso de lípidos (aceite), mientras que la deshidratación implica una deficiencia de agua. Una piel grasa deshidratada puede experimentar un efecto rebote, secretando más sebo para compensar la falta de agua superficial." },
-    { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. La radiación UVA (responsable del fotoenvejecimiento y daño celular profundo) es constante a lo largo de todo el año y penetra a través de nubosidades pesadas y cristales de ventanas comunes." },
-    { mito: "Los cosméticos formulados con ingredientes naturales son intrínsecamente más seguros.", realidad: "Falso. Los extractos naturales puros contienen compuestos químicos complejos y no aislados que aumentan significativamente el índice de dermatitis de contacto alérgica en comparación con moléculas purificadas en laboratorio." }
+    { mito: "Las pieles grasas no requieren hidratación externa.", realidad: "Falso. La seborrea hace alusión a un exceso de lípidos (aceite), mientras que la deshidratación implica una deficiencia de agua." },
+    { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. La radiación UVA es constante a lo largo de todo el año y penetra a través de nubosidades y cristales." }
 ];
 
 const DAILY_ALERTS = [
-    "La dosis estándar de protector solar facial equivale a la longitud de dos dedos de la mano.",
-    "Realice la limpieza facial con agua a temperatura templada; el agua excesivamente caliente altera los lípidos de la barrera.",
-    "El orden de aplicación de los cosméticos se rige por su densidad: vaya siempre de las texturas más acuosas a las más densas.",
-    "Evite secar el rostro frotando la toalla; realice ligeras presiones para no generar micro-fricciones mecánicas."
+    "La dosis estándar de protector solar facial equivale a la longitud de dos dedos.",
+    "El orden de aplicación de los cosméticos se rige por su densidad: de más acuoso a más denso."
 ];
 
 // --- APP STATE & NAVIGATION ---
@@ -104,7 +98,6 @@ let currentStep = 0;
 let scoreAccumulator = { grasa: 0, seca: 0, mixta: 0, sensible: 0 };
 let activeSectionId = "hero";
 
-// --- FUNCIÓN MAESTRA ENRUTADORA SPA (FADE NATIVO CONTROLADO) ---
 function navigateTo(targetSectionId) {
     if (activeSectionId === targetSectionId) return;
 
@@ -113,27 +106,22 @@ function navigateTo(targetSectionId) {
 
     if (!currentSection || !nextSection) return;
 
-    // 1. Animación de salida (Ocultar opacidad paulatinamente)
     currentSection.classList.remove('view-active');
 
-    // Esperar fin del CSS fade-out (0.35s = 350ms)
     setTimeout(() => {
         currentSection.classList.add('hidden');
-
-        // 2. Levantar la nueva sección en el DOM de forma limpia
         nextSection.classList.remove('hidden');
         
-        // Timeout controlado para forzar repintado del motor gráfico
         setTimeout(() => {
             nextSection.classList.add('view-active');
-            window.scrollTo(0, 0); // Evita scrolls infinitos, posiciona arriba en celulares
+            window.scrollTo(0, 0);
         }, 20);
 
         activeSectionId = targetSectionId;
     }, 350);
 }
 
-// --- DOM INICIALIZACIÓN ---
+// --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
     initApp();
 });
@@ -147,14 +135,12 @@ function initApp() {
     setupCoreEvents();
 }
 
-// --- CONSEJO DIARIO ---
 function renderTip() {
     const randomTip = DAILY_ALERTS[Math.floor(Math.random() * DAILY_ALERTS.length)];
     const el = document.getElementById('hero-tip-text');
     if(el) el.innerText = randomTip;
 }
 
-// --- DESARROLLO DEL CUESTIONARIO ---
 function renderQuiz() {
     const quizBody = document.getElementById('quiz-body');
     const counterEl = document.getElementById('quiz-counter');
@@ -168,8 +154,8 @@ function renderQuiz() {
 
     const currentQuiz = SKIN_QUIZ[currentStep];
     const totalQuestions = SKIN_QUIZ.length;
-    
     const calculatedPercentage = Math.round((currentStep / totalQuestions) * 100);
+    
     if(counterEl) counterEl.innerText = `Pregunta ${currentStep + 1} de ${totalQuestions}`;
     if(percentageEl) percentageEl.innerText = `${calculatedPercentage}%`;
     document.getElementById('quiz-progress').style.width = `${calculatedPercentage}%`;
@@ -191,11 +177,7 @@ window.captureStepAnswer = function(optionIdx) {
     renderQuiz();
 };
 
-// --- PROCESAMIENTO MATRICIAL ---
 function processAnalysisScores() {
-    document.getElementById('quiz-progress').style.width = "100%";
-    if(document.getElementById('quiz-percentage')) document.getElementById('quiz-percentage').innerText = "100%";
-    
     let assignedBiotypography = "mixta";
     let maximumValue = -1;
 
@@ -210,11 +192,9 @@ function processAnalysisScores() {
     executeDashboardDisplay(assignedBiotypography);
 }
 
-// --- DESPLIEGUE DEL TABLERO DE RESULTADOS ---
 function executeDashboardDisplay(type) {
     const profile = PROFILES_MATRIX[type];
-    const resultsSec = document.getElementById('results-section');
-    if (!profile || !resultsSec) return;
+    if (!profile) return;
 
     document.getElementById('result-title').innerText = profile.title;
     document.getElementById('result-description').innerText = profile.description;
@@ -248,42 +228,35 @@ function executeDashboardDisplay(type) {
         chipsBox.innerHTML += `<span class="chip">${ing}</span>`;
     });
 
-    // SPA Link: Transición hacia los resultados evitando scroll largo
     navigateTo('results-section');
 }
 
-// --- PERSISTENCIA LOCAL ---
 function checkSavedAnalysis() {
     const record = localStorage.getItem('gg_clinical_profile');
     const banner = document.getElementById('history-banner');
     if (record && PROFILES_MATRIX[record] && banner) {
         banner.classList.remove('hidden');
         document.getElementById('history-skin-name').innerText = PROFILES_MATRIX[record].title;
-        
         document.getElementById('history-load-btn').addEventListener('click', () => {
             executeDashboardDisplay(record);
         });
     }
 }
 
-// --- EVENTOS INTERACTIVOS Y MENÚ MÓVIL OPTIMIZADO PARA SPA ---
 function setupCoreEvents() {
     const navMenu = document.getElementById('nav-menu');
     const burger = document.getElementById('burger-menu');
 
-    // Enlaces de navegación con enrutamiento de clases dinámico (Nativo Escritorio + Celular)
+    // Manejo de clicks en el Navbar SPA
     if (navMenu) {
         const links = navMenu.querySelectorAll('a');
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
-                
                 if (document.getElementById(targetId)) {
                     navigateTo(targetId);
                 }
-
-                // Cierre instantáneo del contenedor móvil al presionar opciones
                 if (navMenu.classList.contains('mobile-active')) {
                     navMenu.classList.remove('mobile-active');
                 }
@@ -291,7 +264,16 @@ function setupCoreEvents() {
         });
     }
 
-    // Botón Lanzador en Hero
+    // SE CORRIGIÓ: Evento para el botón Explorar Activos del Hero
+    const exploreBtn = document.getElementById('hero-explore-btn');
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('glosario'); // Te lleva directo a la vista SPA del Glosario
+        });
+    }
+
+    // Botón comenzar diagnóstico
     const startBtn = document.getElementById('hero-start-btn');
     if (startBtn) {
         startBtn.addEventListener('click', (e) => {
@@ -313,7 +295,6 @@ function setupCoreEvents() {
         });
     }
 
-    // Menú Hamburguesa Funcional (Toggle)
     if (burger && navMenu) {
         burger.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -322,7 +303,7 @@ function setupCoreEvents() {
     }
 }
 
-// --- CONSTRUCCIÓN DEL GLOSARIO ---
+// --- GLOSARIO & MITOS ---
 function renderGlossary() {
     const grid = document.getElementById('glosario-grid');
     if (!grid) return;
@@ -341,7 +322,6 @@ function renderGlossary() {
     });
 }
 
-// MODAL DE ACTIVOS
 const modalElement = document.getElementById('ingredient-modal');
 function triggerModal(index) {
     const item = GLOSSARY_DB[index];
@@ -355,14 +335,16 @@ function triggerModal(index) {
     modalElement.classList.add('active');
 }
 
-document.getElementById('modal-close-btn').addEventListener('click', () => {
-    modalElement.classList.remove('active');
-});
+if(document.getElementById('modal-close-btn')) {
+    document.getElementById('modal-close-btn').addEventListener('click', () => {
+        modalElement.classList.remove('active');
+    });
+}
+
 window.addEventListener('click', (e) => {
     if (e.target === modalElement) modalElement.classList.remove('active');
 });
 
-// --- CONSTRUCCIÓN DEL ACORDEÓN DE MITOS ---
 function renderMitos() {
     const container = document.getElementById('mitos-accordion');
     if (!container) return;
@@ -371,7 +353,6 @@ function renderMitos() {
     MYTHS_ACCORDION.forEach((item) => {
         const accItem = document.createElement('div');
         accItem.className = 'accordion-item';
-        
         accItem.innerHTML = `
             <button class="accordion-header">
                 <span>Mito: "${item.mito}"</span>
@@ -388,7 +369,6 @@ function renderMitos() {
         const headerBtn = accItem.querySelector('.accordion-header');
         headerBtn.addEventListener('click', () => {
             const isActive = accItem.classList.contains('active');
-            
             document.querySelectorAll('.accordion-item').forEach(el => {
                 el.classList.remove('active');
                 el.querySelector('.accordion-content').style.maxHeight = null;

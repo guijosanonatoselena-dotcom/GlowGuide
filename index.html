@@ -2,17 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Directiva de seguridad para permitir la carga de imágenes desde cualquier URL externa -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: blob:;">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: blob:; connect-src *;">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlowGuide - Análisis Dérmico Profesional</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-    <!-- NAVBAR MINIMALISTA -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#hero" class="logo">GlowGuide<span class="serif">.</span></a>
@@ -31,7 +33,6 @@
         </div>
     </nav>
 
-    <!-- VISTA: INICIO (HERO) -->
     <section id="hero" class="hero-section view-section view-active">
         <div class="hero-container">
             <div class="hero-content">
@@ -43,17 +44,15 @@
                 <p>Accede a un análisis técnico avanzado basado en bio-indicadores dérmicos. Diseña una rutina con base científica libre de mitos comerciales.</p>
                 <div class="hero-actions">
                     <button id="hero-start-btn" class="btn btn-primary">Comenzar Diagnóstico</button>
-                    <a href="#glosario" class="btn btn-secondary">Explorar Activos</a>
+                    <button id="hero-explore-btn" class="btn btn-secondary">Explorar Activos</button>
                 </div>
             </div>
             <div class="image-frame hero-graphic">
-                <!-- URL Recomendada de Unsplash para la sección Hero -->
-                <img src="https://images.pexels.com/photos/3762882/pexels-photo-3762882.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cuidado de la piel" class="hero-img">
+                <img src="https://picsum.photos/800/600?random=1" alt="Cuidado de la piel" class="hero-img">
             </div>
         </div>
     </section>
 
-    <!-- BANNER DE HISTORIAL LOCAL -->
     <div id="history-banner" class="history-banner hidden">
         <div class="history-container">
             <span class="history-text">Detectamos un perfil clínico guardado: <strong id="history-skin-name">Piel...</strong></span>
@@ -61,7 +60,6 @@
         </div>
     </div>
 
-    <!-- VISTA: CUESTIONARIO (QUIZ) -->
     <section id="test" class="test-section view-section hidden">
         <div class="container-sm">
             <div class="section-header">
@@ -78,13 +76,11 @@
                     <div id="quiz-progress" class="progress-fill"></div>
                 </div>
                 <div id="quiz-body">
-                    <!-- Inyección dinámica de JavaScript -->
-                </div>
+                    </div>
             </div>
         </div>
     </section>
 
-    <!-- VISTA: PANEL DE RESULTADOS (DASHBOARD) -->
     <section id="results-section" class="results-section view-section hidden">
         <div class="container">
             <div class="section-header">
@@ -100,8 +96,7 @@
                     <div class="clinical-guidelines">
                         <h4>Directrices Clínicas de Control:</h4>
                         <ul id="result-guidelines-list">
-                            <!-- Inyección dinámica -->
-                        </ul>
+                            </ul>
                     </div>
                 </div>
 
@@ -151,7 +146,7 @@
                                 <p>Protección y antioxidantes</p>
                             </div>
                         </div>
-                        <ol id="routine-morning-steps" class="clinical-steps"><!-- Dinámico --></ol>
+                        <ol id="routine-morning-steps" class="clinical-steps"></ol>
                     </div>
                     <div>
                         <div class="column-header">
@@ -161,7 +156,7 @@
                                 <p>Renovación y reparación celular</p>
                             </div>
                         </div>
-                        <ol id="routine-night-steps" class="clinical-steps"><!-- Dinámico --></ol>
+                        <ol id="routine-night-steps" class="clinical-steps"></ol>
                     </div>
                 </div>
             </div>
@@ -172,8 +167,7 @@
                     <p>Moléculas diana recomendadas para modular tu tejido.</p>
                 </div>
                 <div id="target-ingredients-chips" class="chips-flex">
-                    <!-- Dinámico -->
-                </div>
+                    </div>
             </div>
 
             <div class="action-footer">
@@ -182,7 +176,6 @@
         </div>
     </section>
 
-    <!-- VISTA: GLOSARIO DE ACTIVOS -->
     <section id="glosario" class="glosario-section view-section hidden">
         <div class="container">
             <div class="educational-intro">
@@ -192,17 +185,14 @@
                     <p>Aprende a interpretar las etiquetas cosméticas. Conoce los compuestos químicos aislados en laboratorio y su verdadera incidencia celular.</p>
                 </div>
                 <div class="image-frame edu-graphic">
-                    <!-- URL Recomendada de Unsplash para la sección Glosario -->
-                    <img src="https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Laboratorio" class="edu-img">
+                    <img src="https://picsum.photos/800/600?random=2" alt="Laboratorio" class="edu-img">
                 </div>
             </div>
             <div id="glosario-grid" class="glosario-grid">
-                <!-- Tarjetas inyectadas dinámicamente -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- VISTA: ACORDEÓN DE MITOS -->
     <section id="mitos" class="mitos-section view-section hidden">
         <div class="container-sm">
             <div class="section-header">
@@ -211,12 +201,10 @@
                 <p>Desmitificando las corrientes comerciales mediante la confrontación con estudios dermatológicos.</p>
             </div>
             <div id="mitos-accordion" class="accordion-container">
-                <!-- Acordeones dinámicos -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- VISTA: TELEGRAM BOT -->
     <section id="telegram" class="telegram-section view-section hidden">
         <div class="container">
             <div class="telegram-card">
@@ -240,23 +228,9 @@
                 </div>
             </div>
         </div>
-    </section>
+    </footer-bottom>
+    </footer>
 
-    <!-- MODAL DE ACTIVOS -->
-    <div id="ingredient-modal" class="modal-overlay">
-        <div class="modal-box">
-            <button id="modal-close-btn" class="modal-close">&times;</button>
-            <span id="modal-category" class="modal-tag">Categoría</span>
-            <h3 id="modal-title">Activo</h3>
-            <hr class="divider">
-            <p id="modal-description" class="modal-body-text">Descripción...</p>
-            <div class="modal-footer-info">
-                <strong>Biotipos Recomendados:</strong> <span id="modal-target-skin">Todos</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER GENERAL -->
     <footer class="main-footer">
         <div class="container">
             <div class="footer-grid">
@@ -281,6 +255,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>

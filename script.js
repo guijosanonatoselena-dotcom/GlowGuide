@@ -48,7 +48,7 @@ const PROFILES_MATRIX = {
     },
     seca: {
         title: "Piel Seca (Alipídica)",
-        description: "Presentas un déficit cuantitativo de lípidos estructurales en la barrera córnea. Esto compromete la retención de agua transepidérmica, derivando en un tejido con tendencia a líneas finas, opacidad y descamación.",
+        description: "Presentas un déficit quantitative de lípidos estructurales en la barrera córnea. Esto compromete la retención de agua transepidérmica, derivando en un tejido con tendencia a líneas finas, opacidad y descamación.",
         guidelines: ["Evitar agentes tensioactivos agresivos o limpiadores espumosos.", "Aportar fórmulas ricas en ácidos grasos y ceramidas para sellar la barrera.", "Aplicar humectantes sobre el tejido ligeramente húmedo."],
         metrics: { hydration: 25, sensitivity: 45, sebum: 15 },
         ingredients: ["Ácido hialurónico", "Ceramidas", "Péptidos"],
@@ -99,9 +99,39 @@ const DAILY_ALERTS = [
     "Evite secar el rostro frotando la toalla; realice ligeras presiones para no generar micro-fricciones mecánicas."
 ];
 
-// --- APP STATE ---
+// --- APP STATE & NAVIGATION ---
 let currentStep = 0;
 let scoreAccumulator = { grasa: 0, seca: 0, mixta: 0, sensible: 0 };
+let activeSectionId = "hero";
+
+// --- FUNCIÓN MAESTRA ENRUTADORA SPA (FADE NATIVO CONTROLADO) ---
+function navigateTo(targetSectionId) {
+    if (activeSectionId === targetSectionId) return;
+
+    const currentSection = document.getElementById(activeSectionId);
+    const nextSection = document.getElementById(targetSectionId);
+
+    if (!currentSection || !nextSection) return;
+
+    // 1. Animación de salida (Ocultar opacidad paulatinamente)
+    currentSection.classList.remove('view-active');
+
+    // Esperar fin del CSS fade-out (0.35s = 350ms)
+    setTimeout(() => {
+        currentSection.classList.add('hidden');
+
+        // 2. Levantar la nueva sección en el DOM de forma limpia
+        nextSection.classList.remove('hidden');
+        
+        // Timeout controlado para forzar repintado del motor gráfico
+        setTimeout(() => {
+            nextSection.classList.add('view-active');
+            window.scrollTo(0, 0); // Evita scrolls infinitos, posiciona arriba en celulares
+        }, 20);
+
+        activeSectionId = targetSectionId;
+    }, 350);
+}
 
 // --- DOM INICIALIZACIÓN ---
 document.addEventListener("DOMContentLoaded", () => {
@@ -176,8 +206,8 @@ function processAnalysisScores() {
         }
     }
 
-    executeDashboardDisplay(assignedBiotypography);
     localStorage.setItem('gg_clinical_profile', assignedBiotypography);
+    executeDashboardDisplay(assignedBiotypography);
 }
 
 // --- DESPLIEGUE DEL TABLERO DE RESULTADOS ---
@@ -218,8 +248,8 @@ function executeDashboardDisplay(type) {
         chipsBox.innerHTML += `<span class="chip">${ing}</span>`;
     });
 
-    resultsSec.classList.remove('hidden');
-    resultsSec.scrollIntoView({ behavior: 'smooth' });
+    // SPA Link: Transición hacia los resultados evitando scroll largo
+    navigateTo('results-section');
 }
 
 // --- PERSISTENCIA LOCAL ---
@@ -236,51 +266,54 @@ function checkSavedAnalysis() {
     }
 }
 
-// --- EVENTOS INTERACTIVOS Y MENÚ MÓVIL ---
+// --- EVENTOS INTERACTIVOS Y MENÚ MÓVIL OPTIMIZADO PARA SPA ---
 function setupCoreEvents() {
-    // Reiniciar Cuestionario
-    document.getElementById('reset-test-btn').addEventListener('click', () => {
-        currentStep = 0;
-        scoreAccumulator = { grasa: 0, seca: 0, mixta: 0, sensible: 0 };
-        document.getElementById('results-section').classList.add('hidden');
-        renderQuiz();
-        document.getElementById('test').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // Enlaces de navegación con scroll controlado y auto-cierre en móvil
     const navMenu = document.getElementById('nav-menu');
-    const bindScroll = (triggerId, targetId) => {
-        const trigger = document.getElementById(triggerId);
-        if (trigger) {
-            trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                if (navMenu && navMenu.classList.contains('mobile-active')) {
-                    navMenu.classList.remove('mobile-active');
-                }
-            });
-        }
-    };
-    bindScroll('hero-start-btn', 'test');
-    bindScroll('nav-test-trigger', 'test');
-    
-    // Auto-cierre dinámico en celular al presionar enlaces nativos del menú
-    const links = navMenu ? navMenu.querySelectorAll('a') : [];
-    links.forEach(link => {
-        const targetId = link.getAttribute('href').substring(1);
-        if (targetId && document.getElementById(targetId)) {
+    const burger = document.getElementById('burger-menu');
+
+    // Enlaces de navegación con enrutamiento de clases dinámico (Nativo Escritorio + Celular)
+    if (navMenu) {
+        const links = navMenu.querySelectorAll('a');
+        links.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                const targetId = link.getAttribute('href').substring(1);
+                
+                if (document.getElementById(targetId)) {
+                    navigateTo(targetId);
+                }
+
+                // Cierre instantáneo del contenedor móvil al presionar opciones
                 if (navMenu.classList.contains('mobile-active')) {
                     navMenu.classList.remove('mobile-active');
                 }
             });
-        }
-    });
+        });
+    }
 
-    // Menú Hamburguesa Funcional para Dispositivos Móviles
-    const burger = document.getElementById('burger-menu');
+    // Botón Lanzador en Hero
+    const startBtn = document.getElementById('hero-start-btn');
+    if (startBtn) {
+        startBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('test');
+        });
+    }
+
+    // Reiniciar Cuestionario
+    const resetBtn = document.getElementById('reset-test-btn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            currentStep = 0;
+            scoreAccumulator = { grasa: 0, seca: 0, mixta: 0, sensible: 0 };
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('view-active');
+            renderQuiz();
+            navigateTo('test');
+        });
+    }
+
+    // Menú Hamburguesa Funcional (Toggle)
     if (burger && navMenu) {
         burger.addEventListener('click', (e) => {
             e.stopPropagation();

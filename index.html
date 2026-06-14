@@ -3,79 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlowGuide | Sistema de Análisis Dérmico Profesional</title>
-    
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%236C5CE7%22 opacity=%220.1%22/><path d=%22M50,25 C65,45 65,65 50,80 C35,65 35,45 50,25 Z%22 fill=%22%236C5CE7%22/><circle cx=%2250%22 cy=%2245%22 r=%224%22 fill=%22%23FFF%22/></svg>">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>GlowGuide - Análisis Dérmico Profesional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">Glow<span class="serif">Guide</span></a>
-            <ul class="nav-links" id="nav-menu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#test" id="nav-test-trigger">Análisis</a></li>
-                <li><a href="#glosario">Glosario Clínico</a></li>
-                <li><a href="#mitos">Evidencia Científica</a></li>
-                <li><a href="#telegram">Ecosistema Bot</a></li>
-            </ul>
-            <button class="burger" id="burger-menu" aria-label="Abrir menú">
+            <a href="#hero" class="logo">GlowGuide<span class="serif">.</span></a>
+            <button class="burger" id="burger-menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#test">Diagnóstico</a></li>
+                <li><a href="#glosario">Glosario</a></li>
+                <li><a href="#mitos">Mitos</a></li>
+                <li><a href="#telegram">Telegram</a></li>
+            </ul>
         </div>
     </nav>
 
-    <header id="inicio" class="hero-section">
+    <section id="hero" class="hero-section view-section view-active">
         <div class="hero-container">
             <div class="hero-content">
-                <div class="micro-tip" id="hero-tip-container">
-                    <span class="tip-badge">Consejo Científico</span>
-                    <span id="hero-tip-text">Cargando recomendación del día...</span>
+                <div class="micro-tip">
+                    <span class="tip-badge">Tip</span>
+                    <span id="hero-tip-text">Cargando recomendación científica...</span>
                 </div>
-                <h1>Análisis metodológico de la salud cutánea.</h1>
-                <p>Bienvenido a GlowGuide. Una plataforma diseñada bajo fundamentos estéticos y cosméticos para identificar las necesidades biológicas de tu piel, expresar rutinas óptimas y educar mediante evidencia científica.</p>
+                <h1>Descubre la <span class="serif">fisiología</span> de tu piel.</h1>
+                <p>Accede a un análisis técnico avanzado basado en bio-indicadores dérmicos. Diseña una rutina con base científica libre de mitos comerciales.</p>
                 <div class="hero-actions">
-                    <a href="#test" class="btn btn-primary" id="hero-start-btn">Iniciar Diagnóstico Clínico</a>
-                    <a href="#glosario" class="btn btn-link">Explorar Glosario de Activos →</a>
+                    <button id="hero-start-btn" class="btn btn-primary">Comenzar Diagnóstico</button>
+                    <a href="#glosario" class="btn btn-secondary">Explorar Activos</a>
                 </div>
             </div>
-            <div class="hero-graphic">
-                <div class="image-frame">
-                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80" alt="Cosmética y cuidado de la piel especializado" class="hero-img">
-                </div>
+            <div class="image-frame hero-graphic">
+                <img src="Imagenes/hero-skin.jpg" alt="Cuidado de la piel" class="hero-img">
             </div>
         </div>
-    </header>
+    </section>
 
     <div id="history-banner" class="history-banner hidden">
         <div class="history-container">
-            <p class="history-text">🧬 Detectamos un diagnóstico previo en este dispositivo: <strong id="history-skin-name">Piel...</strong></p>
-            <button class="btn btn-secondary btn-xs" id="history-load-btn">Cargar Rutina Guardada</button>
+            <span class="history-text">Detectamos un perfil clínico guardado: <strong id="history-skin-name">Piel...</strong></span>
+            <button id="history-load-btn" class="btn btn-secondary btn-xs">Ver Resultados Previos</button>
         </div>
     </div>
 
-    <section id="test" class="test-section">
+    <section id="test" class="test-section view-section hidden">
         <div class="container-sm">
             <div class="section-header">
-                <span class="section-tag">Metodología</span>
-                <h2>Cuestionario de Evaluación Dérmica</h2>
-                <p>Responde a los indicadores bio-fisiológicos para determinar el estado actual de tu barrera cutánea.</p>
+                <span class="section-tag">Evaluación</span>
+                <h2>Analizador Métrico</h2>
+                <p>Responde con precisión según el comportamiento habitual de tu tejido cutáneo.</p>
             </div>
-
             <div class="quiz-card">
                 <div class="progress-meta">
                     <span id="quiz-counter" class="quiz-counter">Pregunta 1 de 3</span>
                     <span id="quiz-percentage" class="quiz-percentage">0%</span>
                 </div>
                 <div class="progress-track">
-                    <div class="progress-fill" id="quiz-progress"></div>
+                    <div id="quiz-progress" class="progress-fill"></div>
                 </div>
                 <div id="quiz-body">
                     </div>
@@ -83,74 +75,78 @@
         </div>
     </section>
 
-    <section id="results-section" class="results-section hidden">
+    <section id="results-section" class="results-section view-section hidden">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Resultados</span>
-                <h2>Diagnóstico y Prescripción de Rutina</h2>
-                <p>Análisis generado de manera algorítmica según las respuestas y sensibilidades declaradas.</p>
+                <span class="section-tag">Diagnóstico</span>
+                <h2>Tu Perfil Dérmico</h2>
             </div>
-
+            
             <div class="results-dashboard">
-                <div class="dashboard-card profile-card">
-                    <div class="card-meta">Perfil Determinado</div>
-                    <h3 id="result-title">Tipo de Piel</h3>
-                    <p id="result-description" class="profile-desc">Descripción detallada del tipo de piel...</p>
-                    
+                <div class="dashboard-card">
+                    <span class="card-meta">Biotipología Concluyente</span>
+                    <h3 id="result-title">Cargando...</h3>
+                    <p id="result-description" class="profile-desc">Analizando tu estrato córneo...</p>
                     <div class="clinical-guidelines">
-                        <h4>Pautas Generales de Cuidado:</h4>
-                        <ul id="result-guidelines-list"></ul>
+                        <h4>Directrices Clínicas de Control:</h4>
+                        <ul id="result-guidelines-list">
+                            </ul>
                     </div>
                 </div>
 
                 <div class="dashboard-card metrics-card">
-                    <h3>Métricas de Superficie Epidérmica</h3>
+                    <h3>Biomarcadores Evaluados</h3>
                     
                     <div class="biomarker">
                         <div class="biomarker-info">
-                            <span>Nivel de Hidratación (Agua)</span>
+                            <span>Nivel de Hidratación</span>
                             <span id="txt-hydration" class="biomarker-val">0%</span>
                         </div>
-                        <div class="biomarker-track"><div id="bar-hydration" class="biomarker-fill"></div></div>
+                        <div class="biomarker-track">
+                            <div id="bar-hydration" class="biomarker-fill"></div>
+                        </div>
                     </div>
 
                     <div class="biomarker">
                         <div class="biomarker-info">
-                            <span>Sensibilidad / Reactividad de Barrera</span>
+                            <span>Sensibilidad y Reactividad</span>
                             <span id="txt-sensitivity" class="biomarker-val">0%</span>
                         </div>
-                        <div class="biomarker-track"><div id="bar-sensitivity" class="biomarker-fill"></div></div>
+                        <div class="biomarker-track">
+                            <div id="bar-sensitivity" class="biomarker-fill"></div>
+                        </div>
                     </div>
 
                     <div class="biomarker">
                         <div class="biomarker-info">
-                            <span>Lípidos / Producción Sebácea</span>
+                            <span>Índice de Sebo / Lípidos</span>
                             <span id="txt-sebum" class="biomarker-val">0%</span>
                         </div>
-                        <div class="biomarker-track"><div id="bar-sebum" class="biomarker-fill"></div></div>
+                        <div class="biomarker-track">
+                            <div id="bar-sebum" class="biomarker-fill"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="routine-block">
-                <h3 class="block-title">Cronograma de Aplicación Diaria</h3>
+                <h3 class="block-title">Cronograma de Aplicación Prescriptiva</h3>
                 <div class="routine-grid">
-                    <div class="routine-column morning">
+                    <div>
                         <div class="column-header">
                             <span class="icon">☀️</span>
                             <div>
-                                <h4>Fase Diurna</h4>
-                                <p>Protección y antioxidación</p>
+                                <h4>Protocolo de Mañana</h4>
+                                <p>Protección y antioxidantes</p>
                             </div>
                         </div>
                         <ol id="routine-morning-steps" class="clinical-steps"></ol>
                     </div>
-
-                    <div class="routine-column night">
+                    <div>
                         <div class="column-header">
                             <span class="icon">🌙</span>
                             <div>
-                                <h4>Fase Nocturna</h4>
+                                <h4>Protocolo de Noche</h4>
                                 <p>Renovación y reparación celular</p>
                             </div>
                         </div>
@@ -160,106 +156,108 @@
             </div>
 
             <div class="ingredients-block">
-                <h4>Activos Cosmecéuticos Recomendados:</h4>
-                <div id="target-ingredients-chips" class="chips-flex"></div>
+                <div>
+                    <h4>Principios Activos Requeridos</h4>
+                    <p>Moléculas diana recomendadas para modular tu tejido.</p>
+                </div>
+                <div id="target-ingredients-chips" class="chips-flex">
+                    </div>
             </div>
 
             <div class="action-footer">
-                <button class="btn btn-secondary" id="reset-test-btn">Volver a Evaluar</button>
+                <button id="reset-test-btn" class="btn btn-secondary">Repetir Análisis Facial</button>
             </div>
         </div>
     </section>
 
-    <section id="glosario" class="glosario-section reveal-on-scroll">
+    <section id="glosario" class="glosario-section view-section hidden">
         <div class="container">
             <div class="educational-intro">
                 <div class="edu-text">
-                    <span class="section-tag">Diccionario Técnico</span>
-                    <h2>Glosario de Activos Cosméticos</h2>
-                    <p>Consulte la función molecular, categoría y compatibilidad de los principales ingredientes activos del mercado actual. Entender la formulación es el primer paso para una rutina exitosa.</p>
+                    <span class="section-tag">Educación Científica</span>
+                    <h2>Glosario de Principios Activos</h2>
+                    <p>Aprende a interpretar las etiquetas cosméticas. Conoce los compuestos químicos aislados en laboratorio y su verdadera incidencia celular.</p>
                 </div>
-                <div class="edu-graphic">
-                    <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80" alt="Textura de sérum cosmético en laboratorio" class="edu-img">
+                <div class="image-frame edu-graphic">
+                    <img src="Imagenes/glosario-lab.jpg" alt="Laboratorio" class="edu-img">
                 </div>
             </div>
-
-            <div class="glosario-grid" id="glosario-grid">
+            <div id="glosario-grid" class="glosario-grid">
                 </div>
         </div>
     </section>
 
-    <div class="modal-overlay" id="ingredient-modal">
+    <section id="mitos" class="mitos-section view-section hidden">
+        <div class="container-sm">
+            <div class="section-header">
+                <span class="section-tag">Evidencia</span>
+                <h2>Mitos Quirúrgicos y Verdades</h2>
+                <p>Desmitificando las corrientes comerciales mediante la confrontación con estudios dermatológicos.</p>
+            </div>
+            <div id="mitos-accordion" class="accordion-container">
+                </div>
+        </div>
+    </section>
+
+    <section id="telegram" class="telegram-section view-section hidden">
+        <div class="container">
+            <div class="telegram-card">
+                <div class="telegram-info">
+                    <span class="badge-pill">Sincronización Bot</span>
+                    <h2>GlowGuide Telegram Companion</h2>
+                    <p>Lleva tu tratamiento personalizado directamente en tu dispositivo móvil. Nuestro asistente automatizado te recordará el orden exacto de aplicación de tus cosméticos y resolverá tus dudas sobre activos las 24 horas.</p>
+                    <div class="feature-bullets">
+                        <div class="bullet"><span>✦</span> Recordatorios automáticos según tu zona horaria.</div>
+                        <div class="bullet"><span>✦</span> Consulta rápida de ingredientes mediante texto.</div>
+                    </div>
+                    <a href="https://t.me/GlowGuidee_Bot" target="_blank" class="btn btn-dark">Vincular Asistente Virtual</a>
+                </div>
+                <div class="device-mockup">
+                    <div class="device-bar">GlowGuide Bot</div>
+                    <div class="device-screen">
+                        <div class="bubble incoming">Hola. He analizado tus datos. Recuerda aplicar hoy tu solución de Ácido Salicílico al 2% sobre la piel seca.</div>
+                        <div class="bubble outgoing">¿Puedo usar Vitamina C inmediatamente después?</div>
+                        <div class="bubble incoming">No es recomendable en la misma rutina si tu piel se encuentra sensible; prefiere alternar su uso por la mañana.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="ingredient-modal" class="modal-overlay">
         <div class="modal-box">
-            <button class="modal-close" id="modal-close-btn" aria-label="Cerrar ventana">&times;</button>
-            <span class="modal-tag" id="modal-category">Categoría</span>
-            <h3 id="modal-title">Nombre de Ingrediente</h3>
+            <button id="modal-close-btn" class="modal-close">&times;</button>
+            <span id="modal-category" class="modal-tag">Categoría</span>
+            <h3 id="modal-title">Activo</h3>
             <hr class="divider">
             <p id="modal-description" class="modal-body-text">Descripción...</p>
             <div class="modal-footer-info">
-                <strong>Indicación Clínica:</strong> <span id="modal-target-skin">Tipos de piel...</span>
+                <strong>Biotipos Recomendados:</strong> <span id="modal-target-skin">Todos</span>
             </div>
         </div>
     </div>
 
-    <section id="mitos" class="mitos-section reveal-on-scroll">
-        <div class="container-sm">
-            <div class="section-header">
-                <span class="section-tag">Evidencia</span>
-                <h2>Mitos vs. Realidades en Dermatología Cosmética</h2>
-                <p>Desmitificación de creencias populares mediante análisis objetivos fundamentados.</p>
-            </div>
-
-            <div class="accordion-container" id="mitos-accordion">
-                </div>
-        </div>
-    </section>
-
-    <section id="telegram" class="telegram-section reveal-on-scroll">
-        <div class="container">
-            <div class="telegram-card">
-                <div class="telegram-info">
-                    <span class="badge-pill">Ecosistema Digital</span>
-                    <h2>Asistencia Continuada vía Telegram Bot</h2>
-                    <p>Amplíe la experiencia formativa y el seguimiento de su salud cutánea. Nuestro asistente automatizado en Telegram le permite reevaluar su tipo de piel mediante comandos ágiles, recibir notificaciones de adherencia a su rutina y resolver dudas de activos al instante.</p>
-                    <div class="feature-bullets">
-                        <div class="bullet"><span>✦</span> Recordatorios de protección solar diurna.</div>
-                        <div class="bullet"><span>✦</span> Acceso rápido al glosario mediante indexación de palabras clave.</div>
-                        <div class="bullet"><span>✦</span> Historial síncrono descentralizado.</div>
-                    </div>
-                    <a href="https://t.me/GlowGuidee_Bot" target="_blank" class="btn btn-dark">Conectar con Telegram Bot</a>
-                </div>
-                <div class="telegram-visual">
-                    <div class="device-mockup">
-                        <div class="device-bar">GlowGuide Bot</div>
-                        <div class="device-screen">
-                            <div class="bubble incoming">¿Para qué sirve el Ácido Salicílico?</div>
-                            <div class="bubble outgoing">Es un Beta-Hidroxiácido (BHA) liposoluble. Penetra en los folículos pilosebáceos para limpiar el poro y regular el exceso de sebo. Recomendado para pieles mixtas a grasas.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <footer class="main-footer">
-        <div class="footer-grid container">
-            <div class="footer-about">
-                <span class="footer-logo">Glow<span class="serif">Guide</span></span>
-                <p class="footer-desc">Plataforma educativa interactiva orientada al diagnóstico y divulgación científica del cuidado cutáneo.</p>
-            </div>
-            <div class="footer-meta-box">
-                <div class="meta-item">
-                    <span class="meta-label">Proyecto</span>
-                    <span class="meta-value">Skin Care y Cuidado Facial</span>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <span class="footer-logo">GlowGuide<span class="serif">.</span></span>
+                    <p class="footer-desc">Plataforma educativa para la democratización del cuidado integral de la piel mediante el uso de la evidencia científica.</p>
                 </div>
-                <div class="meta-item">
-                    <span class="meta-label">Autoría</span>
-                    <span class="meta-value">Selena Guijosa</span>
+                <div class="footer-meta-box">
+                    <div class="meta-item">
+                        <span class="meta-label">Proyecto</span>
+                        <span class="meta-value">Sistema Clínico Dérmico</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Especialidad</span>
+                        <span class="meta-value">Skin Diagnostic</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 GlowGuide. Todos los derechos reservados de diseño e ingeniería de software.</p>
+            <div class="footer-bottom">
+                <p>&copy; GlowGuide. Desarrollado con rigurosidad científica.</p>
+            </div>
         </div>
     </footer>
 

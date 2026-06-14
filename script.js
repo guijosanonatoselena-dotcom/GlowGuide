@@ -88,6 +88,18 @@ const MYTHS_ACCORDION = [
     { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. La radiación UVA es constante a lo largo de todo el año y penetra a través de nubosidades y cristales." }
 ];
 
+// --- NUEVA DATA DE PRODUCTOS (FASE 1) ---
+const PRODUCTS_DB = [
+    { id: 1, name: "Gel Limpiador Purificante Seboregulador", brand: "DermaLab", cat: "Limpiadores", price: "$420.00", skin: "Grasa, Mixta", ingredients: "Ácido Salicílico 2%, Zinc PCA", benefits: "Controla el exceso de sebo y desobstruye los poros sin resecar la barrera.", rating: 5, img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=600" },
+    { id: 2, name: "Sérum Renovador Retinol Clínico 0.3%", brand: "SkinScience", cat: "Sérums", price: "$680.00", skin: "Seca, Mixta, Grasa", ingredients: "Retinol Puro 0.3%, Vitamina E", benefits: "Acelera la renovación celular y disminuye visiblemente las líneas de expresión.", rating: 4, img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600" },
+    { id: 3, name: "Crema Barrera Nutritiva Intensa", brand: "BioticSkin", cat: "Hidratantes", price: "$510.00", skin: "Seca, Sensible", ingredients: "Ceramidas NP, AP, EOP, Ácido Hialurónico", benefits: "Restaura instantáneamente los lípidos estructurales y calma la tirantez.", rating: 5, img: "https://images.unsplash.com/photo-1608248597481-496100c8c836?q=80&w=600" },
+    { id: 4, name: "Fluido Solar Invisible Advanced FPS 50+", brand: "UV-Block", cat: "Protectores solares", price: "$490.00", skin: "Todos los biotipos", ingredients: "Filtros Orgánicos estables, Niacinamida 2%", benefits: "Protección de amplio espectro contra radiación UV con acabado mate sedoso.", rating: 5, img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600" },
+    { id: 5, name: "Tónico Exfoliante Queratolítico Químico", brand: "AlphaLabs", cat: "Exfoliantes", price: "$460.00", skin: "Grasa, Mixta", ingredients: "Ácido Glicólico 7%, Ácido Salicílico", benefits: "Remueve queratinocitos muertos homogenizando la textura general.", rating: 4, img: "https://images.unsplash.com/photo-1617897903246-719242758050?q=80&w=600" },
+    { id: 6, name: "Emulsión Limpiadora Fisiológica Calmante", brand: "CalmDerm", cat: "Limpiadores", price: "$390.00", skin: "Seca, Sensible", ingredients: "Pantenol, Glicerina Pura", benefits: "Limpia impurezas con suavidad extrema respetando el pH cutáneo.", rating: 5, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a133fa?q=80&w=600" },
+    { id: 7, name: "Sérum Iluminador Antioxidante C-Boost", brand: "SkinScience", cat: "Sérums", price: "$640.00", skin: "Todos los biotipos", ingredients: "Vitamina C Estabilizada 10%, Ácido Ferúlico", benefits: "Neutraliza los radicales libres y devuelve la luminosidad perdida.", rating: 4, img: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=600" },
+    { id: 8, name: "Gel Crema Hidratante de Hidratación Profunda", brand: "AquaDerm", cat: "Hidratantes", price: "$450.00", skin: "Grasa, Mixta, Sensible", ingredients: "Ácido Hialurónico de varios pesos, Centella Asiática", benefits: "Retiene agua celular sin aportar sensación de pesadez ni oclusión.", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600" }
+];
+
 const DAILY_ALERTS = [
     "La dosis estándar de protector solar facial equivale a la longitud de dos dedos.",
     "El orden de aplicación de los cosméticos se rige por su densidad: de más acuoso a más denso."
@@ -129,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function initApp() {
     renderTip();
     renderQuiz();
+    renderProducts();
     renderGlossary();
     renderMitos();
     checkSavedAnalysis();
@@ -243,6 +256,65 @@ function checkSavedAnalysis() {
     }
 }
 
+// --- RENDERIZADO DE PRODUCTOS RECOMENDADOS ---
+function renderProducts() {
+    const grid = document.getElementById('productos-grid');
+    if (!grid) return;
+
+    grid.innerHTML = "";
+    PRODUCTS_DB.forEach((prod, index) => {
+        const stars = "★".repeat(prod.rating) + "☆".repeat(5 - prod.rating);
+        const card = document.createElement('div');
+        card.className = 'producto-card';
+        card.innerHTML = `
+            <div class="producto-img-box">
+                <img src="${prod.img}" alt="${prod.name}" class="producto-img">
+                <span class="producto-cat-badge">${prod.cat}</span>
+            </div>
+            <div class="producto-info">
+                <span class="producto-brand">${prod.brand}</span>
+                <h3 class="producto-title">${prod.name}</h3>
+                <div class="producto-rating">${stars}</div>
+                <p class="producto-desc-short">${prod.benefits.substring(0, 60)}...</p>
+                <div class="producto-meta-specs">
+                    <span><strong>Recomendado:</strong> ${prod.skin}</span>
+                </div>
+                <div class="producto-price-row">
+                    <span class="producto-price">${prod.price}</span>
+                </div>
+                <div class="producto-actions">
+                    <button class="btn btn-secondary btn-xs" onclick="triggerProductModal(${index})">Ver detalles</button>
+                    <button class="btn btn-outline-fav" title="Agregar a Favoritos">♥</button>
+                </div>
+                <button class="btn btn-dark btn-sm producto-btn-cart" style="width: 100%; margin-top: 10px;">Agregar al Carrito</button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// MODAL PARA MOSTRAR DETALLES DE PRODUCTO
+const prodModalElement = document.getElementById('product-modal');
+window.triggerProductModal = function(index) {
+    const prod = PRODUCTS_DB[index];
+    if (!prodModalElement || !prod) return;
+
+    document.getElementById('p-modal-title').innerText = prod.name;
+    document.getElementById('p-modal-brand').innerText = prod.brand;
+    document.getElementById('p-modal-category').innerText = prod.cat;
+    document.getElementById('p-modal-ingredients').innerText = prod.ingredients;
+    document.getElementById('p-modal-benefits').innerText = prod.benefits;
+    document.getElementById('p-modal-skin').innerText = prod.skin;
+
+    prodModalElement.classList.add('active');
+};
+
+if(document.getElementById('product-modal-close-btn')) {
+    document.getElementById('product-modal-close-btn').addEventListener('click', () => {
+        prodModalElement.classList.remove('active');
+    });
+}
+
 function setupCoreEvents() {
     // 1. EVENTO BOTÓN EXPLORAR ACTIVOS (Prioridad Absoluta)
     const exploreBtn = document.getElementById('hero-explore-btn');
@@ -343,6 +415,7 @@ if(document.getElementById('modal-close-btn')) {
 
 window.addEventListener('click', (e) => {
     if (e.target === modalElement) modalElement.classList.remove('active');
+    if (e.target === prodModalElement) prodModalElement.classList.remove('active');
 });
 
 function renderMitos() {

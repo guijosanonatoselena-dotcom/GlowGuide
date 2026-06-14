@@ -29,6 +29,7 @@
             <ul class="nav-links" id="nav-menu">
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#test">Diagnóstico</a></li>
+                <li><a href="#productos">Productos</a></li>
                 <li><a href="#glosario">Glosario</a></li>
                 <li><a href="#mitos">Mitos</a></li>
                 <li><a href="#telegram">Telegram</a></li>
@@ -48,13 +49,11 @@
                 <p>Accede a un análisis técnico avanzado basado en bio-indicadores dérmicos. Diseña una rutina con base científica libre de mitos comerciales.</p>
                 <div class="hero-actions">
                     <button id="hero-start-btn" class="btn btn-primary">Comenzar Diagnóstico</button>
-                    <!-- ID único controlado por JavaScript -->
                     <button id="hero-explore-btn" class="btn btn-secondary">Explorar Activos</button>
                 </div>
             </div>
             <div class="image-frame hero-graphic">
-                <!-- Imagen fija profesional de Unsplash (Misma en PC y Celular) -->
-                <img src="https://images.pexels.com/photos/3762882/pexels-photo-3762882.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cuidado de la piel" class="hero-img">
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800" alt="Cuidado de la piel" class="hero-img">
             </div>
         </div>
     </section>
@@ -188,6 +187,20 @@
         </div>
     </section>
 
+    <!-- NUEVA VISTA: PRODUCTOS RECOMENDADOS -->
+    <section id="productos" class="productos-section view-section hidden">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Prescripción</span>
+                <h2>Formulaciones Recomendadas</h2>
+                <p>Selección de productos optimizados con alta concentración de activos para responder a las necesidades específicas de tu barrera cutánea.</p>
+            </div>
+            <div id="productos-grid" class="productos-grid">
+                <!-- Inyección dinámica de tarjetas de producto -->
+            </div>
+        </div>
+    </section>
+
     <!-- VISTA: GLOSARIO DE ACTIVOS -->
     <section id="glosario" class="glosario-section view-section hidden">
         <div class="container">
@@ -198,8 +211,7 @@
                     <p>Aprende a interpretar las etiquetas cosméticas. Conoce los compuestos químicos aislados en laboratorio y su verdadera incidencia celular.</p>
                 </div>
                 <div class="image-frame edu-graphic">
-                    <!-- Imagen fija profesional de Unsplash (Misma en PC y Celular) -->
-                    <img src="https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=800https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Laboratorio" class="edu-img">
+                    <img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?q=80&w=800" alt="Laboratorio" class="edu-img">
                 </div>
             </div>
             <div id="glosario-grid" class="glosario-grid">
@@ -262,7 +274,29 @@
         </div>
     </div>
 
-    <!-- FOOTER GENERAL (Estructura corregida al 100%) -->
+    <!-- MODAL DE DETALLES DE PRODUCTOS -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-box">
+            <button id="product-modal-close-btn" class="modal-close">&times;</button>
+            <span id="p-modal-category" class="modal-tag">Categoría</span>
+            <h3 id="p-modal-title">Producto</h3>
+            <h4 id="p-modal-brand" style="font-size: 0.95rem; font-weight: 500; color: var(--text-muted); margin-bottom: 12px;">Marca</h4>
+            <hr class="divider">
+            <div style="margin-bottom: 15px;">
+                <strong>🔬 Ingredientes Principales:</strong>
+                <p id="p-modal-ingredients" class="modal-body-text" style="margin-top: 5px;"></p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong>✨ Beneficios Esperados:</strong>
+                <p id="p-modal-benefits" class="modal-body-text" style="margin-top: 5px;"></p>
+            </div>
+            <div class="modal-footer-info">
+                <strong>Tipo de Piel Recomendado:</strong> <span id="p-modal-skin">Biotipo</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER GENERAL -->
     <footer class="main-footer">
         <div class="container">
             <div class="footer-grid">

@@ -1312,6 +1312,8 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    /* Mantenemos altura mínima para evitar deformaciones */
+    height: 100%; 
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
 }
 
@@ -1324,7 +1326,8 @@ body {
 .tratamiento-img-box {
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 220px; /* Altura fija para que todas las fotos sean iguales */
+    flex-shrink: 0; /* Evita que la foto se encoja */
     overflow: hidden;
     background-color: var(--accent-light);
 }
@@ -1332,7 +1335,7 @@ body {
 .tratamiento-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Asegura que la foto cubra todo el espacio sin deformarse */
     transition: transform 0.5s ease;
 }
 
@@ -1346,12 +1349,12 @@ body {
     right: 12px;
     background: rgba(28, 27, 25, 0.85);
     backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
     color: var(--bg-surface);
     padding: 4px 10px;
     font-size: 0.75rem;
     font-weight: 600;
     border-radius: 4px;
+    z-index: 10; /* Asegura que flote sobre la imagen */
 }
 
 .tratamiento-info {

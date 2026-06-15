@@ -92,14 +92,14 @@ const MYTHS_ACCORDION = [
 const PRODUCTS_DB = [
     { id: 1, name: "Gel Limpiador Purificante Seboregulador", brand: "DermaLab", cat: "Limpiadores", price: "$420.00", skin: "Grasa, Mixta", ingredients: "Ácido Salicílico 2%, Zinc PCA", benefits: "Controla el exceso de sebo y desobstruye los poros sin resecar la barrera.", rating: 5, img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=600" },
     { id: 2, name: "Sérum Renovador Retinol Clínico 0.3%", brand: "SkinScience", cat: "Sérums", price: "$680.00", skin: "Seca, Mixta, Grasa", ingredients: "Retinol Puro 0.3%, Vitamina E", benefits: "Acelera la renovación celular y disminuye visiblemente las líneas de expresión.", rating: 4, img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600" },
-       { id: 3, name: "Fluido Solar Invisible Advanced FPS 50+", brand: "UV-Block", cat: "Protectores solares", price: "$490.00", skin: "Todos los biotipos", ingredients: "Filtros Orgánicos estables, Niacinamida 2%", benefits: "Protección de amplio espectro contra radiación UV con acabado mate sedoso.", rating: 5, img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600" },
+    { id: 3, name: "Fluido Solar Invisible Advanced FPS 50+", brand: "UV-Block", cat: "Protectores solares", price: "$490.00", skin: "Todos los biotipos", ingredients: "Filtros Orgánicos estables, Niacinamida 2%", benefits: "Protección de amplio espectro contra radiación UV con acabado mate sedoso.", rating: 5, img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600" },
     { id: 4, name: "Tónico Exfoliante Queratolítico Químico", brand: "AlphaLabs", cat: "Exfoliantes", price: "$460.00", skin: "Grasa, Mixta", ingredients: "Ácido Glicólico 7%, Ácido Salicílico", benefits: "Remueve queratinocitos muertos homogenizando la textura general.", rating: 4, img: "https://images.unsplash.com/photo-1617897903246-719242758050?q=80&w=600" },
     { id: 5, name: "Emulsión Limpiadora Fisiológica Calmante", brand: "CalmDerm", cat: "Limpiadores", price: "$390.00", skin: "Seca, Sensible", ingredients: "Pantenol, Glicerina Pura", benefits: "Limpia impurezas con suavidad extrema respetando el pH cutáneo.", rating: 5, img: "https://images.unsplash.com/photo-1556229010-aa3f7ff66b24?q=80&w=600" },
     { id: 6, name: "Sérum Iluminador Antioxidante C-Boost", brand: "SkinScience", cat: "Sérums", price: "$640.00", skin: "Todos los biotipos", ingredients: "Vitamina C Estabilizada 10%, Ácido Ferúlico", benefits: "Neutraliza los radicales libres y devuelve la luminosidad perdida.", rating: 4, img: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=600" },
     { id: 7, name: "Gel Crema Hidratante de Hidratación Profunda", brand: "AquaDerm", cat: "Hidratantes", price: "$450.00", skin: "Grasa, Mixta, Sensible", ingredients: "Ácido Hialurónico de varios pesos, Centella Asiática", benefits: "Retiene agua celular sin aportar sensación de pesadez ni oclusión.", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600" },
     { id: 8, name: "Gel Crema Hidratante de Hidratación Profunda", brand: "AquaDerm", cat: "Hidratantes", price: "$450.00", skin: "Grasa, Mixta, Sensible", ingredients: "Ácido Hialurónico de varios pesos, Centella Asiática", benefits: "Retiene agua celular sin aportar sensación de pesadez ni oclusión.", rating: 5, img: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&w=600&auto=format&fit=crop" },
     { id: 9, name: "Bálsamo Reparador Labial Avanzado", brand: "BioTicSkin", cat: "Hidratantes", price: "$180.00", skin: "Todos los biotipos", ingredients: "Manteca de Karité, Vitamina E, Pantenol", benefits: "Repara la mucosa labial agrietada y deshidratada de forma inmediata.", rating: 5, img: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=600" },
-   ];
+];
 
 const DAILY_ALERTS = [
     "La dosis estándar de protector solar facial equivale a la longitud de dos dedos.",
@@ -147,6 +147,7 @@ function initApp() {
     renderMitos();
     checkSavedAnalysis();
     setupCoreEvents();
+    renderTreatments(); // <--- AGREGADO: Carga dinámicamente el carrusel de tratamientos profesionales al iniciar
 }
 
 function renderTip() {
@@ -457,4 +458,39 @@ function renderMitos() {
 
         container.appendChild(accItem);
     });
+}
+
+// --- CONTENIDO EXCLUSIVO FASE 2: TRATAMIENTOS FACIALES ---
+const TREATMENTS_DB = [
+    { id: 1, name: "Limpieza Facial Profunda", desc: "Higienización clínica que elimina impurezas, células muertas y comedones mediante exfoliación ultrasónica.", benefits: "Desobstruye poros, purifica el estrato córneo y unifica la textura.", duration: "60 min", skin: "Todos los biotipos", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop" },
+    { id: 2, name: "Hydrafacial Professional", desc: "Tratamiento hidro-dermoabrasivo de grado médico que combina limpieza, exfoliación, extracción e hidratación simultánea.", benefits: "Luminosidad inmediata, hidratación celular profunda y suavizado de líneas.", duration: "45 min", skin: "Todos los biotipos (ideal deshidratadas)", rating: 5, img: "https://images.unsplash.com/photo-1629732047847-50b7ee636e6c?q=80&w=600&auto=format&fit=crop" },
+    { id: 3, name: "Dermaplaning Clínico", desc: "Exfoliación física controlada mediante bisturí dermatológico para retirar el vello facial fino y el estrato córneo acumulado.", benefits: "Máxima suavidad cutánea y optimización absoluta en la absorción de activos.", duration: "40 min", skin: "Seca, Mixta, Opaca", rating: 4, img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=600&auto=format&fit=crop" },
+    { id: 4, name: "Microdermoabrasión con Punta de Diamante", desc: "Peeling mecánico de alta precisión que desgasta las capas superficiales de la piel dañada, estimulando la regeneración celular.", benefits: "Atenúa cicatrices superficiales, manchas y suaviza irregularidades.", duration: "50 min", skin: "Grasa, Mixta, Envejecida", rating: 4, img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=600&auto=format&fit=crop" },
+    { id: 5, name: "Radiofrecuencia Facial", desc: "Emisión de ondas electromagnéticas que generan calor profundo en la dermis, estimulando la producción de nuevo colágeno.", benefits: "Efecto tensor inmediato, remodelación del óvalo facial y mayor firmeza.", duration: "50 min", skin: "Flácida, Seca, Envejecida", rating: 5, img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600&auto=format&fit=crop" },
+    { id: 6, name: "Peeling Químico Clínico", desc: "Aplicación controlada de hidroxiácidos para descamar capas específicas de la epidermis y renovar el tejido.", benefits: "Tratamiento intensivo contra manchas, secuelas de acné y líneas de expresión.", duration: "30 min", skin: "Grasa, Mixta, Hiperpigmentada", rating: 5, img: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=600&auto=format&fit=crop" },
+    { id: 7, name: "Alta Frecuencia Antiséptica", desc: "Aplicación de corriente alterna mediante electrodos de vidrio que generan ozono con propiedades bactericidas y calmantes.", benefits: "Cierra poros, reduce la inflamación por acné y acelera la cicatrización.", duration: "20 min", skin: "Grasa, Acneica, Reactiva", rating: 4, img: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?q=80&w=600&auto=format&fit=crop" },
+    { id: 8, name: "Masaje Facial Drenante Miofascial", desc: "Manipulaciones técnicas manuales orientadas a relajar la musculatura del rostro y estimular el drenaje linfático.", benefits: "Desinflama las facciones, elimina toxinas y alivia la tensión acumulada.", duration: "45 min", skin: "Todos los biotipos (ideal fatigadas)", rating: 5, img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600&auto=format&fit=crop" }
+];
+
+function renderTreatments() {
+    const container = document.getElementById("tratamientos-carousel");
+    if (!container) return;
+
+    container.innerHTML = TREATMENTS_DB.map(t => `
+        <div class="treatment-card">
+            <div class="treatment-img-wrap">
+                <img src="${t.img}" alt="${t.name}">
+                <span class="treatment-duration">⏱️ ${t.duration}</span>
+            </div>
+            <div class="treatment-info">
+                <h3>${t.name}</h3>
+                <p class="treatment-desc">${t.desc}</p>
+                <div class="treatment-meta"><strong>Beneficios:</strong> ${t.benefits}</div>
+                <div class="treatment-meta"><strong>Piel Recom.:</strong> ${t.skin}</div>
+                <div class="treatment-rating">
+                    ${"★".repeat(t.rating)}${"☆".repeat(5 - t.rating)} <span>(${t.rating}/5)</span>
+                </div>
+            </div>
+        </div>
+    `).join("");
 }

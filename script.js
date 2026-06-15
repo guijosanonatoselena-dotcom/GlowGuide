@@ -85,7 +85,7 @@ const GLOSSARY_DB = [
 
 const MYTHS_ACCORDION = [
     { mito: "Las pieles grasas no requieren hidratación externa.", realidad: "Falso. La seborrea hace alusión a un exceso de lípidos (aceite), mientras que la deshidratación implica una deficiencia de agua." },
-    { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. La radiación UVA es constante a lo largo de todo el año y penetra a través de nubosidades y cristales." }
+    { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. El uso de radiación UVA es constante a lo largo de todo el año y penetra a través de nubosidades y cristales." }
 ];
 
 // --- NUEVA DATA DE PRODUCTOS (FASE 1) ---
@@ -98,7 +98,7 @@ const PRODUCTS_DB = [
     { id: 6, name: "Sérum Iluminador Antioxidante C-Boost", brand: "SkinScience", cat: "Sérums", price: "$640.00", skin: "Todos los biotipos", ingredients: "Vitamina C Estabilizada 10%, Ácido Ferúlico", benefits: "Neutraliza los radicales libres y devuelve la luminosidad perdida.", rating: 4, img: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=600" },
     { id: 7, name: "Gel Crema Hidratante de Hidratación Profunda", brand: "AquaDerm", cat: "Hidratantes", price: "$450.00", skin: "Grasa, Mixta, Sensible", ingredients: "Ácido Hialurónico de varios pesos, Centella Asiática", benefits: "Retiene agua celular sin aportar sensación de pesadez ni oclusión.", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600" },
     { id: 8, name: "Gel Crema Hidratante de Hidratación Profunda", brand: "AquaDerm", cat: "Hidratantes", price: "$450.00", skin: "Grasa, Mixta, Sensible", ingredients: "Ácido Hialurónico de varios pesos, Centella Asiática", benefits: "Retiene agua celular sin aportar sensación de pesadez ni oclusión.", rating: 5, img: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&w=600&auto=format&fit=crop" },
-    { id: 9, name: "Bálsamo Reparador Labial Avanzado", brand: "BioTicSkin", cat: "Hidratantes", price: "$180.00", skin: "Todos los biotipos", ingredients: "Manteca de Karité, Vitamina E, Pantenol", benefits: "Repara la mucosa labial agrietada y deshidratada de forma inmediata.", rating: 5, img: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=600" },
+    { id: 9, name: "Bálsamo Reparador Labial Avanzado", brand: "BioTicSkin", cat: "Hidratantes", price: "$180.00", skin: "Todos los biotipos", ingredients: "Manteca de Karité, Vitamina E, Pantenol", benefits: "Repara la mucosa labial agrietada y deshidratada de forma inmediata.", rating: 5, img: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=600" }
 ];
 
 const DAILY_ALERTS = [
@@ -147,7 +147,8 @@ function initApp() {
     renderMitos();
     checkSavedAnalysis();
     setupCoreEvents();
-    renderTreatments(); // <--- AGREGADO: Carga dinámicamente el carrusel de tratamientos profesionales al iniciar
+    renderTreatments();
+    initFavoritos(); // Inicialización de los favoritos integrada limpia
 }
 
 function renderTip() {
@@ -186,6 +187,7 @@ function renderQuiz() {
 window.captureStepAnswer = function(optionIdx) {
     const selectedPoints = SKIN_QUIZ[currentStep].options[optionIdx].points;
     for (let skinType in selectedPoints) {
+        scoreAccumulator[skinType] += selectedPoints[selectedPoints];
         scoreAccumulator[skinType] += selectedPoints[skinType];
     }
     currentStep++;
@@ -286,7 +288,7 @@ function renderProducts() {
                 </div>
                 <div class="producto-actions">
                     <button class="btn btn-secondary btn-xs" onclick="triggerProductModal(${index})">Ver detalles</button>
-                    <button class="btn btn-outline-fav" title="Agregar a Favoritos">♥</button>
+                    <button class="btn btn-outline-fav" title="Agregar a Favoritos">♡</button>
                 </div>
                 <button class="btn btn-dark btn-sm producto-btn-cart" style="width: 100%; margin-top: 10px;">Agregar al Carrito</button>
             </div>
@@ -318,17 +320,14 @@ if(document.getElementById('product-modal-close-btn')) {
 }
 
 function setupCoreEvents() {
-    // 1. EVENTO BOTÓN EXPLORAR ACTIVOS (Prioridad Absoluta)
     const exploreBtn = document.getElementById('hero-explore-btn');
     if (exploreBtn) {
         exploreBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
             navigateTo('glosario');
         });
     }
 
-    // 2. BOTÓN COMENZAR DIAGNÓSTICO
     const startBtn = document.getElementById('hero-start-btn');
     if (startBtn) {
         startBtn.addEventListener('click', (e) => {
@@ -337,7 +336,6 @@ function setupCoreEvents() {
         });
     }
 
-    // Manejo de clicks en el Navbar SPA
     const navMenu = document.getElementById('nav-menu');
     if (navMenu) {
         const links = navMenu.querySelectorAll('a');
@@ -355,14 +353,12 @@ function setupCoreEvents() {
         });
     }
 
-    // Reiniciar Cuestionario
     const resetBtn = document.getElementById('reset-test-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
             currentStep = 0;
             scoreAccumulator = { grasa: 0, seca: 0, mixta: 0, sensible: 0 };
             document.getElementById('results-section').classList.add('hidden');
-            document.getElementById('results-section').classList.remove('view-active');
             renderQuiz();
             navigateTo('test');
         });
@@ -491,30 +487,23 @@ function renderTreatments() {
                 </div>
             </div>
         </div>
-// 1. Inicializar la lista de favoritos desde localStorage
-let favoritosIds = JSON.parse(localStorage.getItem('glowguide_favs')) || [];
+    `).join('');
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-    initFavoritos();
-});
+// --- LOGICA DE FAVORITOS (LOCALSTORAGE Y SECCIÓN COMPLEMENTARIA) ---
+let favoritosIds = JSON.parse(localStorage.getItem('glowguide_favs')) || [];
 
 function initFavoritos() {
     actualizarContadorFavs();
     marcarCorazonesActivos();
     renderFavoritosSection();
 
-    // 2. Escuchar los clics en los corazones de la sección de productos
-    // Reemplaza 'productos' por el ID real de tu sección o contenedor de la tienda si es diferente
-    const tiendaContenedor = document.getElementById("productos") || document.getElementById("productos-grid");
-    
+    const tiendaContenedor = document.getElementById("productos-grid");
     if (tiendaContenedor) {
         tiendaContenedor.addEventListener("click", (e) => {
-            // Busca el botón de corazón (puedes cambiar el selector si usas otra clase)
-            const favBtn = e.target.closest(".btn-outline-fav") || e.target.closest(".btn-fav");
+            const favBtn = e.target.closest(".btn-outline-fav");
             if (favBtn) {
                 e.preventDefault();
-                
-                // Buscamos la tarjeta del producto para obtener su título e identificarlo
                 const card = favBtn.closest(".producto-card");
                 if (card) {
                     const productoTitle = card.querySelector(".producto-title").innerText;
@@ -525,7 +514,6 @@ function initFavoritos() {
     }
 }
 
-// 3. Alternar el estado del corazón (Añadir / Eliminar)
 function toggleFavorito(idProducto, boton) {
     const index = favoritosIds.indexOf(idProducto);
     
@@ -539,10 +527,8 @@ function toggleFavorito(idProducto, boton) {
         boton.classList.remove("active");
     }
 
-    // Guardar en el almacenamiento del navegador
     localStorage.setItem('glowguide_favs', JSON.stringify(favoritosIds));
     
-    // Animación estética del contador
     const badge = document.getElementById("fav-count");
     if (badge) {
         badge.classList.add("pop");
@@ -553,7 +539,6 @@ function toggleFavorito(idProducto, boton) {
     renderFavoritosSection();
 }
 
-// 4. Actualizar el numerito del menú
 function actualizarContadorFavs() {
     const badge = document.getElementById("fav-count");
     if (badge) {
@@ -561,24 +546,25 @@ function actualizarContadorFavs() {
     }
 }
 
-// 5. Mantener los corazones rellenos si el usuario recarga la página
 function marcarCorazonesActivos() {
-    const tarjetas = document.querySelectorAll(".producto-card");
+    const tarjetas = document.querySelectorAll("#productos-grid .producto-card");
     tarjetas.forEach(tarjeta => {
         const tituloContenedor = tarjeta.querySelector(".producto-title");
-        const boton = tarjeta.querySelector(".btn-outline-fav") || tarjeta.querySelector(".btn-fav");
+        const boton = tarjeta.querySelector(".btn-outline-fav");
         
         if (tituloContenedor && boton) {
             const titulo = tituloContenedor.innerText;
             if (favoritosIds.includes(titulo)) {
                 boton.innerHTML = "♥";
                 boton.classList.add("active");
+            } else {
+                boton.innerHTML = "♡";
+                boton.classList.remove("active");
             }
         }
     });
 }
 
-// 6. Renderizar los productos guardados en la nueva sección
 function renderFavoritosSection() {
     const favGrid = document.getElementById("favoritos-grid");
     const favSection = document.getElementById("favoritos-section");
@@ -586,48 +572,54 @@ function renderFavoritosSection() {
 
     favGrid.innerHTML = "";
 
-    // Si no hay favoritos, muestra el mensaje elegante solicitado
     if (favoritosIds.length === 0) {
         favGrid.innerHTML = `<div class="fav-empty-message">Aún no has agregado productos a favoritos.</div>`;
-        if (favSection) favSection.classList.add("hidden"); // Se oculta la sección de forma limpia si está vacía
+        if (favSection) favSection.classList.add("hidden");
         return;
     }
 
     if (favSection) favSection.classList.remove("hidden");
 
-    // Buscamos las tarjetas originales en la tienda para clonarlas con su mismo diseño premium
-    const todasLasTarjetas = document.querySelectorAll(".producto-card");
+    const todasLasTarjetas = document.querySelectorAll("#productos-grid .producto-card");
     
     todasLasTarjetas.forEach(tarjeta => {
         const tituloContenedor = tarjeta.querySelector(".producto-title");
         if (tituloContenedor) {
             const titulo = tituloContenedor.innerText;
             
-            if (favoritosIds.includes(titulo) && !tarjeta.closest("#favoritos-grid")) {
-                // Clonamos la tarjeta exacta con estilos, imágenes y textos
+            if (favoritosIds.includes(titulo)) {
                 const clon = tarjeta.cloneNode(true);
                 
-                // Reconfiguramos el botón del corazón del clon para que permita eliminarlo desde aquí
-                const clonBtn = clon.querySelector(".btn-outline-fav") || clon.querySelector(".btn-fav");
+                // Remover el botón de "Agregar al Carrito" o cualquier elemento extra si quisieras, 
+                // pero como mantendremos el diseño idéntico, solo reactivamos su evento.
+                const clonBtn = clon.querySelector(".btn-outline-fav");
                 if (clonBtn) {
                     clonBtn.innerHTML = "♥";
                     clonBtn.classList.add("active");
                     
                     clonBtn.addEventListener("click", (e) => {
                         e.preventDefault();
-                        // Al quitarlo de favoritos, buscamos el botón original en la tienda y lo actualizamos también
+                        // Desmarcar en la tienda principal y actualizar todo
                         todasLasTarjetas.forEach(t => {
-                            if (!t.closest("#favoritos-grid") && t.querySelector(".producto-title").innerText === titulo) {
-                                const btnOriginal = t.querySelector(".btn-outline-fav") || t.querySelector(".btn-fav");
+                            if (t.querySelector(".producto-title").innerText === titulo) {
+                                const btnOriginal = t.querySelector(".btn-outline-fav");
                                 toggleFavorito(titulo, btnOriginal);
                             }
                         });
                     });
                 }
+                
+                // Sincronizar el botón de detalles del clon para que no rompa el modal
+                const clonDetallesBtn = clon.querySelector(".btn-xs");
+                if (clonDetallesBtn) {
+                    // Mantiene el atributo onclick original apuntando al index correcto
+                    clonDetallesBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                    });
+                }
+
                 favGrid.appendChild(clon);
             }
         }
     });
-}
-    `).join("");
 }

@@ -491,5 +491,143 @@ function renderTreatments() {
                 </div>
             </div>
         </div>
+// 1. Inicializar la lista de favoritos desde localStorage
+let favoritosIds = JSON.parse(localStorage.getItem('glowguide_favs')) || [];
+
+document.addEventListener("DOMContentLoaded", () => {
+    initFavoritos();
+});
+
+function initFavoritos() {
+    actualizarContadorFavs();
+    marcarCorazonesActivos();
+    renderFavoritosSection();
+
+    // 2. Escuchar los clics en los corazones de la sección de productos
+    // Reemplaza 'productos' por el ID real de tu sección o contenedor de la tienda si es diferente
+    const tiendaContenedor = document.getElementById("productos") || document.getElementById("productos-grid");
+    
+    if (tiendaContenedor) {
+        tiendaContenedor.addEventListener("click", (e) => {
+            // Busca el botón de corazón (puedes cambiar el selector si usas otra clase)
+            const favBtn = e.target.closest(".btn-outline-fav") || e.target.closest(".btn-fav");
+            if (favBtn) {
+                e.preventDefault();
+                
+                // Buscamos la tarjeta del producto para obtener su título e identificarlo
+                const card = favBtn.closest(".producto-card");
+                if (card) {
+                    const productoTitle = card.querySelector(".producto-title").innerText;
+                    toggleFavorito(productoTitle, favBtn);
+                }
+            }
+        });
+    }
+}
+
+// 3. Alternar el estado del corazón (Añadir / Eliminar)
+function toggleFavorito(idProducto, boton) {
+    const index = favoritosIds.indexOf(idProducto);
+    
+    if (index === -1) {
+        favoritosIds.push(idProducto);
+        boton.innerHTML = "♥";
+        boton.classList.add("active");
+    } else {
+        favoritosIds.splice(index, 1);
+        boton.innerHTML = "♡";
+        boton.classList.remove("active");
+    }
+
+    // Guardar en el almacenamiento del navegador
+    localStorage.setItem('glowguide_favs', JSON.stringify(favoritosIds));
+    
+    // Animación estética del contador
+    const badge = document.getElementById("fav-count");
+    if (badge) {
+        badge.classList.add("pop");
+        setTimeout(() => badge.classList.remove("pop"), 200);
+    }
+
+    actualizarContadorFavs();
+    renderFavoritosSection();
+}
+
+// 4. Actualizar el numerito del menú
+function actualizarContadorFavs() {
+    const badge = document.getElementById("fav-count");
+    if (badge) {
+        badge.innerText = favoritosIds.length;
+    }
+}
+
+// 5. Mantener los corazones rellenos si el usuario recarga la página
+function marcarCorazonesActivos() {
+    const tarjetas = document.querySelectorAll(".producto-card");
+    tarjetas.forEach(tarjeta => {
+        const tituloContenedor = tarjeta.querySelector(".producto-title");
+        const boton = tarjeta.querySelector(".btn-outline-fav") || tarjeta.querySelector(".btn-fav");
+        
+        if (tituloContenedor && boton) {
+            const titulo = tituloContenedor.innerText;
+            if (favoritosIds.includes(titulo)) {
+                boton.innerHTML = "♥";
+                boton.classList.add("active");
+            }
+        }
+    });
+}
+
+// 6. Renderizar los productos guardados en la nueva sección
+function renderFavoritosSection() {
+    const favGrid = document.getElementById("favoritos-grid");
+    const favSection = document.getElementById("favoritos-section");
+    if (!favGrid) return;
+
+    favGrid.innerHTML = "";
+
+    // Si no hay favoritos, muestra el mensaje elegante solicitado
+    if (favoritosIds.length === 0) {
+        favGrid.innerHTML = `<div class="fav-empty-message">Aún no has agregado productos a favoritos.</div>`;
+        if (favSection) favSection.classList.add("hidden"); // Se oculta la sección de forma limpia si está vacía
+        return;
+    }
+
+    if (favSection) favSection.classList.remove("hidden");
+
+    // Buscamos las tarjetas originales en la tienda para clonarlas con su mismo diseño premium
+    const todasLasTarjetas = document.querySelectorAll(".producto-card");
+    
+    todasLasTarjetas.forEach(tarjeta => {
+        const tituloContenedor = tarjeta.querySelector(".producto-title");
+        if (tituloContenedor) {
+            const titulo = tituloContenedor.innerText;
+            
+            if (favoritosIds.includes(titulo) && !tarjeta.closest("#favoritos-grid")) {
+                // Clonamos la tarjeta exacta con estilos, imágenes y textos
+                const clon = tarjeta.cloneNode(true);
+                
+                // Reconfiguramos el botón del corazón del clon para que permita eliminarlo desde aquí
+                const clonBtn = clon.querySelector(".btn-outline-fav") || clon.querySelector(".btn-fav");
+                if (clonBtn) {
+                    clonBtn.innerHTML = "♥";
+                    clonBtn.classList.add("active");
+                    
+                    clonBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        // Al quitarlo de favoritos, buscamos el botón original en la tienda y lo actualizamos también
+                        todasLasTarjetas.forEach(t => {
+                            if (!t.closest("#favoritos-grid") && t.querySelector(".producto-title").innerText === titulo) {
+                                const btnOriginal = t.querySelector(".btn-outline-fav") || t.querySelector(".btn-fav");
+                                toggleFavorito(titulo, btnOriginal);
+                            }
+                        });
+                    });
+                }
+                favGrid.appendChild(clon);
+            }
+        }
+    });
+}
     `).join("");
 }

@@ -33,7 +33,7 @@
             <ul class="nav-links" id="nav-menu">
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#test">Diagnóstico</a></li>
-                <li><a href="#productos">Productos</a></li>
+                <li><a href="#productos">Productos <span id="fav-count" class="fav-counter-badge">0</span></a></li>
                 <li><a href="#tratamientos">Tratamientos</a></li> <!-- AGREGADO EN FASE 2 -->
                 <li><a href="#glosario">Glosario</a></li>
                 <li><a href="#mitos">Mitos</a></li>
@@ -205,6 +205,23 @@
             </div>
         </div>
     </section>
+<!-- ==========================================================================
+   NUEVA SECCIÓN: MIS FAVORITOS
+   ========================================================================== -->
+<section id="favoritos-section" class="productos-section hidden">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Tu Colección</span>
+            <h2>Mis Favoritos</h2>
+            <p>Los productos seleccionados para el cuidado óptimo de tu piel.</p>
+        </div>
+        
+        <!-- Aquí se renderizarán los productos que marques con corazón -->
+        <div id="favoritos-grid" class="productos-grid">
+            <!-- El JavaScript meterá el mensaje elegante o las tarjetas aquí -->
+        </div>
+    </div>
+</section>
 
     <!-- VISTA EXCLUSIVA FASE 2: TRATAMIENTOS FACIALES -->
     <section id="tratamientos" class="tratamientos-section view-section hidden">

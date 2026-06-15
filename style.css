@@ -1402,3 +1402,43 @@ body {
     font-size: 0.8rem;
     color: var(--text-muted);
 }
+/* ==========================================================================
+   ESTILOS COMPLEMENTARIOS: SISTEMA DE FAVORITOS
+   ========================================================================== */
+.fav-counter-badge {
+    background-color: var(--accent-color);
+    color: var(--bg-surface);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 4px;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.fav-counter-badge.pop {
+    transform: scale(1.2);
+}
+
+.fav-empty-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-family: var(--font-main);
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-surface);
+}
+
+/* Animación fluida para el cambio de estado del corazón */
+.btn-outline-fav {
+    transition: all 0.2s ease-in-out;
+}
+.btn-outline-fav.active {
+    color: #ff4d6d !important;
+    background: #fff0f1 !important;
+    border-color: #ffccd0 !important;
+}

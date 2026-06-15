@@ -477,15 +477,15 @@ function renderTreatments() {
     if (!container) return;
 
     container.innerHTML = TREATMENTS_DB.map(t => `
-        <div class="treatment-card">
-            <div class="treatment-img-box">
+        <div class="tratamiento-card">
+            <div class="tratamiento-img-box">
                 <img src="${t.img}" class="tratamiento-img" alt="${t.name}">
-                <span class="treatment-duration-badge">${t.duration}min</span>
+                <span class="tratamiento-duration-badge">${t.duration}</span>
             </div>
-            <div class="treatment-info">
-                <h3 class="tratamiento-tittle">{t.name}</h3>
-                <p class="treatment-desc">${t.desc}</p>
-                <div class="treatment-meta">
+            <div class="tratamiento-info">
+                <h3 class="tratamiento-title">${t.name}</h3>
+                <p class="tratamiento-desc">${t.desc}</p>
+                <div class="tratamiento-meta">
                      <span class="tratamiento-skin-type">${t.skin}</span>
                      <span class="tratamiento-frequency">Recomendado</span>
                 </div>

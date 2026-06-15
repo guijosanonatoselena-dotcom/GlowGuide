@@ -480,10 +480,10 @@ function renderTreatments() {
         <div class="treatment-card">
             <div class="treatment-img-box">
                 <img src="${t.img}" class="tratamiento-img" alt="${t.name}">
-                <span class="treatment-duration-badge">${t.tiempo}min</span>
+                <span class="treatment-duration-badge">${t.duration}min</span>
             </div>
             <div class="treatment-info">
-                <h3 class="tratamiento-tittle">{t.nombre}</h3>
+                <h3 class="tratamiento-tittle">{t.name}</h3>
                 <p class="treatment-desc">${t.desc}</p>
                 <div class="treatment-meta">
                      <span class="tratamiento-skin-type">${t.skin}</span>

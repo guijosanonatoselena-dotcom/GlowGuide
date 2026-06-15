@@ -478,17 +478,16 @@ function renderTreatments() {
 
     container.innerHTML = TREATMENTS_DB.map(t => `
         <div class="treatment-card">
-            <div class="treatment-img-wrap">
-                <img src="${t.img}" alt="${t.name}">
-                <span class="treatment-duration">⏱️ ${t.duration}</span>
+            <div class="treatment-img-box">
+                <img src="${t.img}" class="tratamiento-img" alt="${t.name}">
+                <span class="treatment-duration-badge">${t.tiempo}min</span>
             </div>
             <div class="treatment-info">
-                <h3>${t.name}</h3>
+                <h3 class="tratamiento-tittle">{t.nombre}</h3>
                 <p class="treatment-desc">${t.desc}</p>
-                <div class="treatment-meta"><strong>Beneficios:</strong> ${t.benefits}</div>
-                <div class="treatment-meta"><strong>Piel Recom.:</strong> ${t.skin}</div>
-                <div class="treatment-rating">
-                    ${"★".repeat(t.rating)}${"☆".repeat(5 - t.rating)} <span>(${t.rating}/5)</span>
+                <div class="treatment-meta">
+                     <span class="tratamiento-skin-type">${t.skin}</span>
+                     <span class="tratamiento-frequency">Recomendado</span>
                 </div>
             </div>
         </div>

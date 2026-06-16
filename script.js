@@ -85,20 +85,20 @@ const GLOSSARY_DB = [
 
 const MYTHS_ACCORDION = [
     { mito: "Las pieles grasas no requieren hidratación externa.", realidad: "Falso. La seborrea hace alusión a un exceso de lípidos (aceite), mientras que la deshidratación implica una deficiencia de agua." },
-    { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. La radiación UVA es constante a lo largo de todo el año y penetra a través de nubosidades y cristales." }
+    { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. El uso de radiación UVA es constante a lo largo de todo el año y penetra a través de nubosidades y cristales." }
 ];
 
 // --- NUEVA DATA DE PRODUCTOS (FASE 1) ---
 const PRODUCTS_DB = [
     { id: 1, name: "Gel Limpiador Purificante Seboregulador", brand: "DermaLab", cat: "Limpiadores", price: "$420.00", skin: "Grasa, Mixta", ingredients: "Ácido Salicílico 2%, Zinc PCA", benefits: "Controla el exceso de sebo y desobstruye los poros sin resecar la barrera.", rating: 5, img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=600" },
     { id: 2, name: "Sérum Renovador Retinol Clínico 0.3%", brand: "SkinScience", cat: "Sérums", price: "$680.00", skin: "Seca, Mixta, Grasa", ingredients: "Retinol Puro 0.3%, Vitamina E", benefits: "Acelera la renovación celular y disminuye visiblemente las líneas de expresión.", rating: 4, img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600" },
-    { id: 3, name: "Fluido Solar Invisible Advanced FPS 50+", brand: "UV-Block", cat: "Protectores solares", price: "$490.00", skin: "Todos los biotipos", ingredients: "Filtros Orgánicos estables, Niacinamida 2+", benefits: "Protección de amplio espectro contra radiación UV con acabado mate sedoso.", rating: 5, img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600" },
+    { id: 3, name: "Fluido Solar Invisible Advanced FPS 50+", brand: "UV-Block", cat: "Protectores solares", price: "$490.00", skin: "Todos los biotipos", ingredients: "Filtros Orgánicos estables, Niacinamida 2%", benefits: "Protección de amplio espectro contra radiación UV con acabado mate sedoso.", rating: 5, img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600" },
     { id: 4, name: "Tónico Exfoliante Queratolítico Químico", brand: "AlphaLabs", cat: "Exfoliantes", price: "$460.00", skin: "Grasa, Mixta", ingredients: "Ácido Glicólico 7%, Ácido Salicílico", benefits: "Remueve queratinocitos muertos homogenizando la textura general.", rating: 4, img: "https://images.unsplash.com/photo-1617897903246-719242758050?q=80&w=600" },
     { id: 5, name: "Emulsión Limpiadora Fisiológica Calmante", brand: "CalmDerm", cat: "Limpiadores", price: "$390.00", skin: "Seca, Sensible", ingredients: "Pantenol, Glicerina Pura", benefits: "Limpia impurezas con suavidad extrema respetando el pH cutáneo.", rating: 5, img: "https://images.unsplash.com/photo-1556229010-aa3f7ff66b24?q=80&w=600" },
     { id: 6, name: "Sérum Iluminador Antioxidante C-Boost", brand: "SkinScience", cat: "Sérums", price: "$640.00", skin: "Todos los biotipos", ingredients: "Vitamina C Estabilizada 10%, Ácido Ferúlico", benefits: "Neutraliza los radicales libres y devuelve la luminosidad perdida.", rating: 4, img: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=600" },
     { id: 7, name: "Gel Crema Hidratante de Hidratación Profunda", brand: "AquaDerm", cat: "Hidratantes", price: "$450.00", skin: "Grasa, Mixta, Sensible", ingredients: "Ácido Hialurónico de varios pesos, Centella Asiática", benefits: "Retiene agua celular sin aportar sensación de pesadez ni oclusión.", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600" },
     { id: 8, name: "Gel Crema Hidratante de Hidratación Profunda", brand: "AquaDerm", cat: "Hidratantes", price: "$450.00", skin: "Grasa, Mixta, Sensible", ingredients: "Ácido Hialurónico de varios pesos, Centella Asiática", benefits: "Retiene agua celular sin aportar sensación de pesadez ni oclusión.", rating: 5, img: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&w=600&auto=format&fit=crop" },
-    { id: 9, name: "Bálsamo Reparador Labial Avanzado", brand: "BioTicSkin", cat: "Hidratantes", price: "$180.00", skin: "Todos los biotipos", ingredients: "Manteca de Karité, Vitamina E, Pantenol", benefits: "Repara la mucosa labial agrietada y deshidratada de forma inmediata.", rating: 5, img: "https://images.unsplash.com/photo-1620917670397-dc7bc46e6bcd?q=80&w=600&auto=format&fit=crop" }
+    { id: 9, name: "Bálsamo Reparador Labial Avanzado", brand: "BioTicSkin", cat: "Hidratantes", price: "$180.00", skin: "Todos los biotipos", ingredients: "Manteca de Karité, Vitamina E, Pantenol", benefits: "Repara la mucosa labial agrietada y deshidratada de forma inmediata.", rating: 5, img: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=600" }
 ];
 
 const DAILY_ALERTS = [
@@ -131,18 +131,6 @@ function navigateTo(targetSectionId) {
         }, 20);
 
         activeSectionId = targetSectionId;
-
-        // --- CORRECCIÓN FIJADA: Forzar ocultación/visibilidad de favoritos según sección ---
-        const favSection = document.getElementById("favoritos-section");
-        if (favSection) {
-            if (targetSectionId === "productos" || targetSectionId === "productos-section" || targetSectionId === "hero") {
-                // Solo permitimos que intente estar visible si estamos en la tienda o inicio
-                favSection.classList.remove("hidden");
-            } else {
-                // Si entra a tratamientos o cualquier otra sección, la ocultamos por completo
-                favSection.classList.add("hidden");
-            }
-        }
     }, 350);
 }
 
@@ -159,6 +147,8 @@ function initApp() {
     renderMitos();
     checkSavedAnalysis();
     setupCoreEvents();
+    renderTreatments();
+    initFavoritos(); // Inicialización de los favoritos integrada limpia
 }
 
 function renderTip() {
@@ -197,6 +187,7 @@ function renderQuiz() {
 window.captureStepAnswer = function(optionIdx) {
     const selectedPoints = SKIN_QUIZ[currentStep].options[optionIdx].points;
     for (let skinType in selectedPoints) {
+        scoreAccumulator[skinType] += selectedPoints[selectedPoints];
         scoreAccumulator[skinType] += selectedPoints[skinType];
     }
     currentStep++;
@@ -297,13 +288,17 @@ function renderProducts() {
                 </div>
                 <div class="producto-actions">
                     <button class="btn btn-secondary btn-xs" onclick="triggerProductModal(${index})">Ver detalles</button>
-                    <button class="btn btn-outline-fav" title="Agregar a Favoritos">♥</button>
+                    <button class="btn btn-outline-fav" title="Agregar a Favoritos">♡</button>
                 </div>
                 <button class="btn btn-dark btn-sm producto-btn-cart" style="width: 100%; margin-top: 10px;">Agregar al Carrito</button>
             </div>
         `;
         grid.appendChild(card);
     });
+const favSection = document.getElementById("favoritos-section");
+    if (favSection) {
+        favSection.style.position = "relative";
+        favSection.style.clear = "both";
 }
 
 // MODAL PARA MOSTRAR DETALLES DE PRODUCTO
@@ -329,17 +324,14 @@ if(document.getElementById('product-modal-close-btn')) {
 }
 
 function setupCoreEvents() {
-    // 1. EVENTO BOTÓN EXPLORAR ACTIVOS (Prioridad Absoluta)
     const exploreBtn = document.getElementById('hero-explore-btn');
     if (exploreBtn) {
         exploreBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
             navigateTo('glosario');
         });
     }
 
-    // 2. BOTÓN COMENZAR DIAGNÓSTICO
     const startBtn = document.getElementById('hero-start-btn');
     if (startBtn) {
         startBtn.addEventListener('click', (e) => {
@@ -348,7 +340,6 @@ function setupCoreEvents() {
         });
     }
 
-    // Manejo de clicks en el Navbar SPA
     const navMenu = document.getElementById('nav-menu');
     if (navMenu) {
         const links = navMenu.querySelectorAll('a');
@@ -366,14 +357,12 @@ function setupCoreEvents() {
         });
     }
 
-    // Reiniciar Cuestionario
     const resetBtn = document.getElementById('reset-test-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
             currentStep = 0;
             scoreAccumulator = { grasa: 0, seca: 0, mixta: 0, sensible: 0 };
             document.getElementById('results-section').classList.add('hidden');
-            document.getElementById('results-section').classList.remove('view-active');
             renderQuiz();
             navigateTo('test');
         });
@@ -468,5 +457,173 @@ function renderMitos() {
         });
 
         container.appendChild(accItem);
+    });
+}
+
+// --- CONTENIDO EXCLUSIVO FASE 2: TRATAMIENTOS FACIALES ---
+const TREATMENTS_DB = [
+    { id: 1, name: "Limpieza Facial Profunda", desc: "Higienización clínica que elimina impurezas, células muertas y comedones mediante exfoliación ultrasónica.", benefits: "Desobstruye poros, purifica el estrato córneo y unifica la textura.", duration: "60 min", skin: "Todos los biotipos", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop" },
+    { id: 2, name: "Hydrafacial Professional", desc: "Tratamiento hidro-dermoabrasivo de grado médico que combina limpieza, exfoliación, extracción e hidratación simultánea.", benefits: "Luminosidad inmediata, hidratación celular profunda y suavizado de líneas.", duration: "45 min", skin: "Todos los biotipos (ideal deshidratadas)", rating: 5, img: "https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=600" },
+    { id: 3, name: "Dermaplaning Clínico", desc: "Exfoliación física controlada mediante bisturí dermatológico para retirar el vello facial fino y el estrato córneo acumulado.", benefits: "Máxima suavidad cutánea y optimización absoluta en la absorción de activos.", duration: "40 min", skin: "Seca, Mixta, Opaca", rating: 4, img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=600&auto=format&fit=crop" },
+    { id: 4, name: "Microdermoabrasión con Punta de Diamante", desc: "Peeling mecánico de alta precisión que desgasta las capas superficiales de la piel dañada, estimulando la regeneración celular.", benefits: "Atenúa cicatrices superficiales, manchas y suaviza irregularidades.", duration: "50 min", skin: "Grasa, Mixta, Envejecida", rating: 4, img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=600&auto=format&fit=crop" },
+    { id: 5, name: "Radiofrecuencia Facial", desc: "Emisión de ondas electromagnéticas que generan calor profundo en la dermis, estimulando la producción de nuevo colágeno.", benefits: "Efecto tensor inmediato, remodelación del óvalo facial y mayor firmeza.", duration: "50 min", skin: "Flácida, Seca, Envejecida", rating: 5, img: "https://images.pexels.com/photos/5069612/pexels-photo-5069612.jpeg?auto=compress&cs=tinysrgb&w=600" },
+    { id: 6, name: "Peeling Químico Clínico", desc: "Aplicación controlada de hidroxiácidos para descamar capas específicas de la epidermis y renovar el tejido.", benefits: "Tratamiento intensivo contra manchas, secuelas de acné y líneas de expresión.", duration: "30 min", skin: "Grasa, Mixta, Hiperpigmentada", rating: 5, img: "https://images.pexels.com/photos/5240668/pexels-photo-5240668.jpeg?auto=compress&cs=tinysrgb&w=600" },
+    { id: 7, name: "Alta Frecuencia Antiséptica", desc: "Aplicación de corriente alterna mediante electrodos de vidrio que generan ozono con propiedades bactericidas y calmantes.", benefits: "Cierra poros, reduce la inflamación por acné y acelera la cicatrización.", duration: "20 min", skin: "Grasa, Acneica, Reactiva", rating: 4, img: "https://images.pexels.com/photos/3985292/pexels-photo-3985292.jpeg?auto=compress&cs=tinysrgb&w=600" },
+    { id: 8, name: "Masaje Facial Drenante Miofascial", desc: "Manipulaciones técnicas manuales orientadas a relajar la musculatura del rostro y estimular el drenaje linfático.", benefits: "Desinflama las facciones, elimina toxinas y alivia la tensión acumulada.", duration: "45 min", skin: "Todos los biotipos (ideal fatigadas)", rating: 5, img: "https://images.pexels.com/photos/3762466/pexels-photo-3762466.jpeg?auto=compress&cs=tinysrgb&w=600" }
+];
+
+function renderTreatments() {
+    const container = document.getElementById("tratamientos-carousel");
+    if (!container) return;
+
+    container.innerHTML = TREATMENTS_DB.map(t => `
+        <div class="tratamiento-card">
+            <div class="tratamiento-img-box">
+                <img src="${t.img}" class="tratamiento-img" alt="${t.name}">
+                <span class="tratamiento-duration-badge">${t.duration}</span>
+            </div>
+            <div class="tratamiento-info">
+                <h3 class="tratamiento-title">${t.name}</h3>
+                <p class="tratamiento-desc">${t.desc}</p>
+                <div class="tratamiento-meta">
+                     <span class="tratamiento-skin-type">${t.skin}</span>
+                     <span class="tratamiento-frequency">Recomendado</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// --- LOGICA DE FAVORITOS (LOCALSTORAGE Y SECCIÓN COMPLEMENTARIA) ---
+let favoritosIds = JSON.parse(localStorage.getItem('glowguide_favs')) || [];
+
+function initFavoritos() {
+    actualizarContadorFavs();
+    marcarCorazonesActivos();
+    renderFavoritosSection();
+
+    const tiendaContenedor = document.getElementById("productos-grid");
+    if (tiendaContenedor) {
+        tiendaContenedor.addEventListener("click", (e) => {
+            const favBtn = e.target.closest(".btn-outline-fav");
+            if (favBtn) {
+                e.preventDefault();
+                const card = favBtn.closest(".producto-card");
+                if (card) {
+                    const productoTitle = card.querySelector(".producto-title").innerText;
+                    toggleFavorito(productoTitle, favBtn);
+                }
+            }
+        });
+    }
+}
+
+function toggleFavorito(idProducto, boton) {
+    const index = favoritosIds.indexOf(idProducto);
+    
+    if (index === -1) {
+        favoritosIds.push(idProducto);
+        boton.innerHTML = "♥";
+        boton.classList.add("active");
+    } else {
+        favoritosIds.splice(index, 1);
+        boton.innerHTML = "♡";
+        boton.classList.remove("active");
+    }
+
+    localStorage.setItem('glowguide_favs', JSON.stringify(favoritosIds));
+    
+    const badge = document.getElementById("fav-count");
+    if (badge) {
+        badge.classList.add("pop");
+        setTimeout(() => badge.classList.remove("pop"), 200);
+    }
+
+    actualizarContadorFavs();
+    renderFavoritosSection();
+}
+
+function actualizarContadorFavs() {
+    const badge = document.getElementById("fav-count");
+    if (badge) {
+        badge.innerText = favoritosIds.length;
+    }
+}
+
+function marcarCorazonesActivos() {
+    const tarjetas = document.querySelectorAll("#productos-grid .producto-card");
+    tarjetas.forEach(tarjeta => {
+        const tituloContenedor = tarjeta.querySelector(".producto-title");
+        const boton = tarjeta.querySelector(".btn-outline-fav");
+        
+        if (tituloContenedor && boton) {
+            const titulo = tituloContenedor.innerText;
+            if (favoritosIds.includes(titulo)) {
+                boton.innerHTML = "♥";
+                boton.classList.add("active");
+            } else {
+                boton.innerHTML = "♡";
+                boton.classList.remove("active");
+            }
+        }
+    });
+}
+
+function renderFavoritosSection() {
+    const favGrid = document.getElementById("favoritos-grid");
+    const favSection = document.getElementById("favoritos-section");
+    if (!favGrid) return;
+
+    favGrid.innerHTML = "";
+
+    if (favoritosIds.length === 0) {
+        favGrid.innerHTML = `<div class="fav-empty-message">Aún no has agregado productos a favoritos.</div>`;
+        if (favSection) favSection.classList.add("hidden");
+        return;
+    }
+
+    if (favSection) favSection.classList.remove("hidden");
+
+    const todasLasTarjetas = document.querySelectorAll("#productos-grid .producto-card");
+    
+    todasLasTarjetas.forEach(tarjeta => {
+        const tituloContenedor = tarjeta.querySelector(".producto-title");
+        if (tituloContenedor) {
+            const titulo = tituloContenedor.innerText;
+            
+            if (favoritosIds.includes(titulo)) {
+                const clon = tarjeta.cloneNode(true);
+                
+                // Remover el botón de "Agregar al Carrito" o cualquier elemento extra si quisieras, 
+                // pero como mantendremos el diseño idéntico, solo reactivamos su evento.
+                const clonBtn = clon.querySelector(".btn-outline-fav");
+                if (clonBtn) {
+                    clonBtn.innerHTML = "♥";
+                    clonBtn.classList.add("active");
+                    
+                    clonBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        // Desmarcar en la tienda principal y actualizar todo
+                        todasLasTarjetas.forEach(t => {
+                            if (t.querySelector(".producto-title").innerText === titulo) {
+                                const btnOriginal = t.querySelector(".btn-outline-fav");
+                                toggleFavorito(titulo, btnOriginal);
+                            }
+                        });
+                    });
+                }
+                
+                // Sincronizar el botón de detalles del clon para que no rompa el modal
+                const clonDetallesBtn = clon.querySelector(".btn-xs");
+                if (clonDetallesBtn) {
+                    // Mantiene el atributo onclick original apuntando al index correcto
+                    clonDetallesBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                    });
+                }
+
+                favGrid.appendChild(clon);
+            }
+        }
     });
 }

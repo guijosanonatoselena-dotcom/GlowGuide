@@ -387,7 +387,6 @@ function setupCoreEvents() {
             navMenu.classList.toggle('mobile-active');
         });
     }
-}
 
 // --- GLOSARIO & MITOS ---
 function renderGlossary() {

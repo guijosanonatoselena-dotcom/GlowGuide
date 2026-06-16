@@ -34,7 +34,16 @@
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#test">Diagnóstico</a></li>
                 <li><a href="#productos">Productos <span id="fav-count" class="fav-counter-badge">0</span></a></li>
-                <li><a href="#tratamientos">Tratamientos</a></li> <!-- AGREGADO EN FASE 2 -->
+                <li><a href="#tratamientos">Tratamientos</a></li> <!-- AGREGADO 
+
+                <li>
+                    <a href="#carrito-section">Carrito <span id="cart-counter" style="background: #ff4d4d; color: #fff; border-radius: 50%; padding: 2px 7px; font-size: 11px; margin-left: 5px; display: none;">0</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+EN FASE 2 -->
                 <li><a href="#glosario">Glosario</a></li>
                 <li><a href="#mitos">Mitos</a></li>
                 <li><a href="#telegram">Telegram</a></li>
@@ -205,6 +214,27 @@
             </div>
         </div>
     </section>
+
+<section id="carrito-section" class="hidden">
+    <div class="container" style="padding: 40px 20px; max-width: 800px; margin: 0 auto;">
+        <h2 style="text-align: center; font-family: inherit; margin-bottom: 30px; color: #333;">Mi Carrito de Compras</h2>
+        
+        <div id="cart-items-container" style="background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            </div>
+
+        <div style="background: #fff; margin-top: 20px; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+            <div style="font-size: 15px; color: #666;">Subtotal: <span id="cart-subtotal" style="font-weight: bold; color: #333;">$0.00</span></div>
+            <div style="font-size: 18px; color: #333; font-weight: bold; border-top: 1px solid #eee; padding-top: 10px; width: 100%; text-align: right;"> Total: <span id="cart-total" style="color: #0056b3;">$0.00</span></div>
+            
+            <div style="display: flex; gap: 15px; margin-top: 15px; width: 100%; justify-content: flex-end;">
+                <button class="btn btn-outline" style="border: 1px solid #ccc; background: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;" onclick="clearCart()">Vaciar carrito</button>
+                <button class="btn btn-dark" style="padding: 10px 25px; border-radius: 6px;" onclick="alert('Procediendo al pago seguro...')">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <!-- ==========================================================================
    NUEVA SECCIÓN: MIS FAVORITOS
    ========================================================================== -->
@@ -359,4 +389,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

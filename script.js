@@ -635,6 +635,174 @@ function renderFavoritosSection() {
 
                 favGrid.appendChild(clon);
             }
+         }
+}
+
+// =========================================================================
+// --- SISTEMA DE CARRITO DE COMPRAS PROFESIONAL (GLOWGUIDE) ---
+// =========================================================================
+
+let cart = JSON.parse(localStorage.getItem('gg_cart')) || [];
+
+// 1. Inicializar eventos del carrito al cargar la app
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCounter();
+    renderCart();
+    setupCartEvents();
+});
+
+// 2. Configurar el evento de click en los botones "Agregar al Carrito" existentes
+function setupCartEvents() {
+    const grid = document.getElementById('productos-grid');
+    if (!grid) return;
+
+    // Escuchamos los clicks en el contenedor principal para no interferir con tu renderProducts()
+    grid.addEventListener('click', (e) => {
+        if (e.target && e.target.classList.contains('producto-btn-cart')) {
+            // Buscamos el botón "Ver detalles" de la misma tarjeta para obtener el index del producto
+            const actionsDiv = e.target.previousElementSibling;
+            const detailBtn = actionsDiv ? actionsDiv.querySelector('button[onclick^="triggerProductModal"]') : null;
+            
+            if (detailBtn) {
+                const match = detailBtn.getAttribute('onclick').match(/\d+/);
+                if (match) {
+                    const productIndex = parseInt(match[0], 10);
+                    addToCart(productIndex, e.target);
+                }
+            }
         }
     });
 }
+
+// 3. Función Principal: Agregar Producto al Carrito
+window.addToCart = function(productIndex, buttonElement) {
+    const product = PRODUCTS_DB[productIndex];
+    if (!product) return;
+
+    // Verificar si ya existe en el carrito
+    const existingItem = cart.find(item => item.id === product.id);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            brand: product.brand,
+            price: parseFloat(product.price.replace('$', '')),
+            img: product.img,
+            quantity: 1
+        });
+    }
+
+    // Guardar en LocalStorage y actualizar
+    localStorage.setItem('gg_cart', JSON.stringify(cart));
+    updateCartCounter();
+    renderCart();
+
+    // Animación Premium en el botón
+    if (buttonElement) {
+        const originalText = buttonElement.innerText;
+        buttonElement.innerText = "¡Agregado! ✓";
+        buttonElement.style.backgroundColor = "#4caf50";
+        buttonElement.style.borderColor = "#4caf50";
+        buttonElement.disabled = true;
+
+        setTimeout(() => {
+            buttonElement.innerText = originalText;
+            buttonElement.style.backgroundColor = "";
+            buttonElement.style.borderColor = "";
+            buttonElement.disabled = false;
+        }, 1200);
+    }
+};
+
+// 4. Actualizar Contador Visual del Carrito (Busca un elemento con id="cart-counter")
+function updateCartCounter() {
+    const counterEl = document.getElementById('cart-counter');
+    if (!counterEl) return;
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    counterEl.innerText = totalItems;
+    counterEl.style.display = totalItems > 0 ? "inline-block" : "none";
+}
+
+// 5. Renderizar la sección "Mi Carrito" de forma reactiva
+function renderCart() {
+    const cartContainer = document.getElementById('cart-items-container');
+    if (!cartContainer) return;
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #888;">
+                <p>Tu carrito de GlowGuide está vacío.</p>
+            </div>
+        `;
+        updateCartTotals(0);
+        return;
+    }
+
+    cartContainer.innerHTML = "";
+    cart.forEach((item, index) => {
+        const itemRow = document.createElement('div');
+        itemRow.className = 'cart-item-row';
+        itemRow.style.cssText = "display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; gap: 15px;";
+        
+        itemRow.innerHTML = `
+            <img src="${item.img}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+            <div style="flex: 1;">
+                <span style="font-size: 12px; color: #aaa; text-transform: uppercase;">${item.brand}</span>
+                <h4 style="margin: 2px 0; font-size: 14px; color: #333;">${item.name}</h4>
+                <span style="font-weight: bold; color: #333;">$${item.price.toFixed(2)}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn" style="padding: 2px 8px; font-size: 12px;" onclick="changeCartQuantity(${index}, -1)">-</button>
+                <span style="font-weight: bold; min-width: 20px; text-align: center;">${item.quantity}</span>
+                <button class="btn" style="padding: 2px 8px; font-size: 12px;" onclick="changeCartQuantity(${index}, 1)">+</button>
+            </div>
+            <div>
+                <button class="btn btn-xs" style="background: none; color: #ff4d4d; border: none; font-size: 18px; cursor: pointer;" onclick="removeFromCart(${index})" title="Eliminar">×</button>
+            </div>
+        `;
+        cartContainer.appendChild(itemRow);
+    });
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    updateCartTotals(subtotal);
+}
+
+// 6. Cambiar cantidades (+) y (-)
+window.changeCartQuantity = function(index, delta) {
+    cart[index].quantity += delta;
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    }
+    localStorage.setItem('gg_cart', JSON.stringify(cart));
+    updateCartCounter();
+    renderCart();
+};
+
+// 7. Eliminar un producto por completo
+window.removeFromCart = function(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('gg_cart', JSON.stringify(cart));
+    updateCartCounter();
+    renderCart();
+};
+
+// 8. Vaciar todo el carrito
+window.clearCart = function() {
+    cart = [];
+    localStorage.removeItem('gg_cart');
+    updateCartCounter();
+    renderCart();
+};
+
+// 9. Actualizar los bloques de Totales
+function updateCartTotals(subtotal) {
+    const subtotalEl = document.getElementById('cart-subtotal');
+    const totalEl = document.getElementById('cart-total');
+    
+    if (subtotalEl) subtotalEl.innerText = `$${subtotal.toFixed(2)}`;
+    if (totalEl) totalEl.innerText = `$${subtotal.toFixed(2)}`;
+}
+     

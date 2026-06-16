@@ -1441,4 +1441,55 @@ body {
     color: #ff4d6d !important;
     background: #fff0f1 !important;
     border-color: #ffccd0 !important;
+/* =========================================================================
+   --- ESTILOS PREMIUM PARA EL CARRITO DE COMPRAS (GLOWGUIDE) ---
+   ========================================================================= */
+
+/* Contenedor de cada fila de producto en el carrito */
+.cart-item-row {
+    transition: background-color 0.2s ease;
+}
+
+.cart-item-row:hover {
+    background-color: #fafafa; /* Un sutil cambio gris premium al pasar el mouse */
+}
+
+/* Botones de + y - para las cantidades */
+.cart-item-row .btn {
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-item-row .btn:hover {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+/* Animación de entrada para los productos cuando se renderizan */
+@keyframes fadeInRow {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cart-item-row {
+    animation: fadeInRow 0.3s ease forwards;
+}
+
+/* Asegurar que el contador del menú sea perfectamente esférico */
+#cart-counter {
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 14px; /* Centra el número verticalmente */
 }

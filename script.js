@@ -131,6 +131,16 @@ function navigateTo(targetSectionId) {
         }, 20);
 
         activeSectionId = targetSectionId;
+const favSection = document.getElementById("favoritos-section");
+        if (favSection) {
+            // Si el usuario entra a tratamientos (o al test/glosario), ocultamos favoritos por completo
+            if (targetSectionId === "tratamientos" || targetSectionId === "test" || targetSectionId === "glosario") {
+                favSection.style.display = "none";
+            } else {
+                // En la tienda o el inicio los volvemos a mostrar de forma natural
+                favSection.style.display = "";
+            }
+        }
     }, 350);
 }
 

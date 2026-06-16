@@ -577,8 +577,14 @@ function renderFavoritosSection() {
         if (favSection) favSection.classList.add("hidden");
         return;
     }
-
-    if (favSection) favSection.classList.remove("hidden");
+if (favSection) {
+        if (activeSectionId === "productos" || activeSectionId === "hero" || activeSectionId === "productos-section") { 
+            // Nota: Cambia "productos" por el ID exacto que use tu sección de tienda si es diferente
+            favSection.classList.remove("hidden");
+        } else {
+            favSection.classList.add("hidden");
+        }
+}
 
     const todasLasTarjetas = document.querySelectorAll("#productos-grid .producto-card");
     

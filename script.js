@@ -299,6 +299,7 @@ const favSection = document.getElementById("favoritos-section");
     if (favSection) {
         favSection.style.position = "relative";
         favSection.style.clear = "both";
+    }
 }
 
 // MODAL PARA MOSTRAR DETALLES DE PRODUCTO

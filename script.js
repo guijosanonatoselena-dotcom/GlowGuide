@@ -132,11 +132,14 @@ function navigateTo(targetSectionId) {
                 cartSec.style.display = 'none';
             }
         }
-        if (targetSectionId !== 'favoritos-section') {
             const favSec = document.getElementById('favoritos-section');
             if (favSec) {
+                if (targetSectionId === 'productos') {
                 favSec.classList.add('hidden');
-                favSec.style.display = 'none';
+                favSec.style.display = 'block';
+            } else { 
+                favSec.classList.add('hidden');
+                favSec.style.display = 'none'; 
             }
         }
         

@@ -351,7 +351,7 @@ window.triggerProductModal = function(index) {
 window.processOrderCheckout = function() {
     // Si la función global "getCartItems" existe y el carrito está vacío, frenamos.
     if (typeof cart !== 'undefined' && cart.length === 0) {
-        alert("Tu carrito está vacío. Añade productos antes de pagar.");
+        mostrarNotificacionGlow("Tu carrito está vacío. Añade productos antes de pagar.");
         return;
     }
 
@@ -472,7 +472,6 @@ function setupCoreEvents() {
             navMenu.classList.toggle('mobile-active');
         });
     }
-}
 
 // --- GLOSARIO & MITOS ---
 function renderGlossary() {
@@ -876,6 +875,7 @@ function updateCartTotals(subtotal) {
     
     if (subtotalEl) subtotalEl.innerText = `$${subtotal.toFixed(2)}`;
     if (totalEl) totalEl.innerText = `$${subtotal.toFixed(2)}`;
+}
 function mostrarNotificacionGlow(mensaje, tipo = "success") {
     const viejaNotif = document.getElementById('glow-toast-notification');
     if (viejaNotif) viejaNotif.remove();

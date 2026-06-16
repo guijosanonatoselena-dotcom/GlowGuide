@@ -670,7 +670,6 @@ function marcarCorazonesActivos() {
         }
     });
 }
-
 function renderFavoritosSection() {
     const favGrid = document.getElementById("favoritos-grid");
     const favSection = document.getElementById("favoritos-section");
@@ -679,9 +678,55 @@ function renderFavoritosSection() {
     favGrid.innerHTML = "";
 
     if (favoritosIds.length === 0) {
-        favGrid.innerHTML = `<div class="fav-empty-message" style="grid-column: 1/-1; text-align: center; color: #aaa; padding: 20px;">Aún no has agregado productos a favoritos.</div>`;
+        favGrid.innerHTML = `<div class="fav-empty-message" style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #888;">Aún no has agregado productos a favoritos.</div>`;
+        if (favSection) favSection.classList.add("hidden");
         return;
     }
+
+    if (favSection) favSection.classList.remove("hidden");
+
+    PRODUCTS_DB.forEach((product, index) => {
+        if (favoritosIds.includes(product.name)) {
+            const card = document.createElement('div');
+            card.className = 'producto-card';
+            
+            card.innerHTML = `
+                <div class="producto-img-box">
+                    <img src="${product.img}" class="producto-img" alt="${product.name}">
+                    <button class="btn-outline-fav active" title="Quitar de favoritos">♥</button>
+                </div>
+                <div class="producto-info">
+                    <span class="producto-brand">${product.brand}</span>
+                    <h3 class="producto-title">${product.name}</h3>
+                    <p class="producto-price">${product.price}</p>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="btn btn-secondary btn-xs-detalles" style="padding: 5px 10px; font-size: 12px; border-radius: 4px; cursor: pointer;">Ver detalles</button>
+                    </div>
+                </div>
+            `;
+
+            card.querySelector('.btn-outline-fav').addEventListener('click', (e) => {
+                e.preventDefault();
+                let botonOriginal = null;
+                document.querySelectorAll("#productos-grid .producto-card").forEach(t => {
+                    if (t.querySelector(".producto-title").innerText === product.name) {
+                        botonOriginal = t.querySelector(".btn-outline-fav");
+                    }
+                });
+                toggleFavorito(product.name, botonOriginal);
+            });
+
+            card.querySelector('.btn-xs-detalles').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (typeof triggerProductModal === "function") {
+                    triggerProductModal(index);
+                }
+            });
+
+            favGrid.appendChild(card);
+        }
+    });
+}
 
     const todasLasTarjetas = document.querySelectorAll("#productos-grid .producto-card");
     

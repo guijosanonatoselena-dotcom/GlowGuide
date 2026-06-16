@@ -377,7 +377,7 @@ window.processOrderCheckout = function() {
         if (typeof updateCartUI === 'function') updateCartUI();
     }
 
-    alert(`¡Pago Seguro Confirmado!\nSu orden ${nuevoPedido.id} ha sido enviada al laboratorio de control dérmico.`);
+    mostrarNotificacionGlow(`¡Pago Seguro Confirmado!<br><small style="color: #6c5ce7; font-weight: 600;">Su orden ${nuevoPedido.id}</small> ha sido enviada al laboratorio de control dérmico.`, "success");
     navigateTo('pedidos-section'); // Redirección inmediata al historial
 };
 
@@ -876,4 +876,28 @@ function updateCartTotals(subtotal) {
     
     if (subtotalEl) subtotalEl.innerText = `$${subtotal.toFixed(2)}`;
     if (totalEl) totalEl.innerText = `$${subtotal.toFixed(2)}`;
+function mostrarNotificacionGlow(mensaje, tipo = "success") {
+    const viejaNotif = document.getElementById('glow-toast-notification');
+    if (viejaNotif) viejaNotif.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'glow-toast-notification';
+    toast.className = `glow-toast ${tipo}`;
+    
+    toast.innerHTML = `
+        <div class="glow-toast-content">
+            <span class="glow-toast-icon">${tipo === 'success' ? '✨' : '⚠️'}</span>
+            <p class="glow-toast-message">${mensaje}</p>
+        </div>
+        <button class="glow-toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Animación de entrada y desvanecimiento automático a los 5 segundos
+    setTimeout(() => { toast.classList.add('show'); }, 100);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => { toast.remove(); }, 400);
+    }, 5000);
 }

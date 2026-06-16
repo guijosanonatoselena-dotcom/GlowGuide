@@ -1492,4 +1492,73 @@ body {
     height: 18px;
     text-align: center;
     line-height: 14px; /* Centra el número verticalmente */
+/* --- NOTIFICACIÓN PREMIUM EN PANTALLA --- */
+.glow-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid #e0dbff;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    max-width: 380px;
+    z-index: 9999;
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glow-toast.show {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.glow-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.glow-toast-icon {
+    font-size: 22px;
+    animation: pulseGlow 2s infinite;
+}
+
+.glow-toast-message {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+    font-family: inherit;
+}
+
+.glow-toast-close {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.glow-toast-close:hover {
+    color: #6c5ce7;
+}
+
+.glow-toast.error {
+    border-color: #ffb8b8;
+    box-shadow: 0 10px 30px rgba(255, 77, 77, 0.1);
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }

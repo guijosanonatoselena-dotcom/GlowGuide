@@ -2,26 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Evitar que el navegador guarde en caché estados erróneos -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <!-- Forzar permisos de imágenes externas -->
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: blob:; connect-src *;">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlowGuide - Análisis Dérmico Profesional</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Ruta corregida para asegurar la vinculación en Render -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Icono personalizado para la pestaña -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%236C5CE7%22 opacity=%220.1%22/><path d=%22M50,25 C65,45 65,65 50,80 C35,65 35,45 50,25 Z%22 fill=%22%236C5CE7%22/><circle cx=%2250%22 cy=%2245%22 r=%224%22 fill=%22%23FFF%22/></svg>">
 </head>
 <body>
 
-    <!-- NAVBAR MINIMALISTA -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#hero" class="logo">GlowGuide<span class="serif">.</span></a>
@@ -34,21 +29,15 @@
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#test">Diagnóstico</a></li>
                 <li><a href="#productos">Productos <span id="fav-count" class="fav-counter-badge">0</span></a></li>
-                <li><a href="#tratamientos">Tratamientos</a></li> <!-- AGREGADO 
-
-                <li>
-                    <a href="#carrito-section">Carrito <span id="cart-counter" style="background: #ff4d4d; color: #fff; border-radius: 50%; padding: 2px 7px; font-size: 11px; margin-left: 5px; display: none;">0</span></a>
-                </li>
-
-EN FASE 2 -->
-                <li><a href="#glosario">Glosario</a></li>
+                <li><a href="#tratamientos">Tratamientos</a></li>
+                <li><a href="#carrito-section">Carrito <span id="cart-counter" style="background: #ff4d4d; color: #fff; border-radius: 50%; padding: 2px 7px; font-size: 11px; margin-left: 5px; display: none;">0</span></a></li>
+                <li><a href="#pedidos-section">Pedidos</a></li> <li><a href="#glosario">Glosario</a></li>
                 <li><a href="#mitos">Mitos</a></li>
                 <li><a href="#telegram">Telegram</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- VISTA: INICIO (HERO) -->
     <section id="hero" class="hero-section view-section view-active">
         <div class="hero-container">
             <div class="hero-content">
@@ -69,7 +58,6 @@ EN FASE 2 -->
         </div>
     </section>
 
-    <!-- BANNER DE HISTORIAL LOCAL -->
     <div id="history-banner" class="history-banner hidden">
         <div class="history-container">
             <span class="history-text">Detectamos un perfil clínico guardado: <strong id="history-skin-name">Piel...</strong></span>
@@ -77,7 +65,6 @@ EN FASE 2 -->
         </div>
     </div>
 
-    <!-- VISTA: CUESTIONARIO (QUIZ) -->
     <section id="test" class="test-section view-section hidden">
         <div class="container-sm">
             <div class="section-header">
@@ -94,13 +81,11 @@ EN FASE 2 -->
                     <div id="quiz-progress" class="progress-fill"></div>
                 </div>
                 <div id="quiz-body">
-                    <!-- Inyección dinámica de JavaScript -->
-                </div>
+                    </div>
             </div>
         </div>
     </section>
 
-    <!-- VISTA: PANEL DE RESULTADOS (DASHBOARD) -->
     <section id="results-section" class="results-section view-section hidden">
         <div class="container">
             <div class="section-header">
@@ -116,8 +101,7 @@ EN FASE 2 -->
                     <div class="clinical-guidelines">
                         <h4>Directrices Clínicas de Control:</h4>
                         <ul id="result-guidelines-list">
-                            <!-- Inyección dinámica -->
-                        </ul>
+                            </ul>
                     </div>
                 </div>
 
@@ -167,7 +151,7 @@ EN FASE 2 -->
                                 <p>Protección y antioxidantes</p>
                             </div>
                         </div>
-                        <ol id="routine-morning-steps" class="clinical-steps"><!-- Dinámico --></ol>
+                        <ol id="routine-morning-steps" class="clinical-steps"></ol>
                     </div>
                     <div>
                         <div class="column-header">
@@ -177,7 +161,7 @@ EN FASE 2 -->
                                 <p>Renovación y reparación celular</p>
                             </div>
                         </div>
-                        <ol id="routine-night-steps" class="clinical-steps"><!-- Dinámico --></ol>
+                        <ol id="routine-night-steps" class="clinical-steps"></ol>
                     </div>
                 </div>
             </div>
@@ -188,8 +172,7 @@ EN FASE 2 -->
                     <p>Moléculas diana recomendadas para modular tu tejido.</p>
                 </div>
                 <div id="target-ingredients-chips" class="chips-flex">
-                    <!-- Dinámico -->
-                </div>
+                    </div>
             </div>
 
             <div class="action-footer">
@@ -198,7 +181,6 @@ EN FASE 2 -->
         </div>
     </section>
 
-    <!-- VISTA: PRODUCTOS RECOMENDADOS -->
     <section id="productos" class="productos-section view-section hidden">
         <div class="container">
             <div class="section-header">
@@ -207,50 +189,56 @@ EN FASE 2 -->
                 <p>Selección de productos optimizados con alta concentración de activos para responder a las necesidades específicas de tu barrera cutánea.</p>
             </div>
             <div id="productos-grid" class="productos-grid">
-                <!-- Inyección dinámica de tarjetas de producto -->
+                </div>
+        </div>
+    </section>
+
+    <section id="favoritos-section" class="productos-section hidden" style="margin-top: 50px; border-top: 1px solid #eee; padding-top: 40px;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Tu Colección</span>
+                <h2>Mis Favoritos</h2>
+                <p>Los productos seleccionados para el cuidado óptimo de tu piel.</p>
+            </div>
+            <div id="favoritos-grid" class="productos-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="carrito-section" class="productos-section view-section hidden"> <div class="container" style="padding: 40px 20px; max-width: 800px; margin: 0 auto;">
+            <h2 style="text-align: center; font-family: inherit; margin-bottom: 30px; color: #333;">Mi Carrito de Compras</h2>
+            
+            <div id="cart-items-container" style="background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                </div>
+
+            <div style="background: #fff; margin-top: 20px; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+                <div style="font-size: 15px; color: #666;">Subtotal: <span id="cart-subtotal" style="font-weight: bold; color: #333;">$0.00</span></div>
+                <div style="font-size: 18px; color: #333; font-weight: bold; border-top: 1px solid #eee; padding-top: 10px; width: 100%; text-align: right;"> Total: <span id="cart-total" style="color: #0056b3;">$0.00</span></div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 15px; width: 100%; justify-content: flex-end;">
+                    <button class="btn btn-outline" style="border: 1px solid #ccc; background: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;" onclick="clearCart()">Vaciar carrito</button>
+                    <button class="btn btn-dark" style="padding: 10px 25px; border-radius: 6px;" onclick="processOrderCheckout()">Proceder al Pago</button>
+                </div>
             </div>
         </div>
     </section>
 
-<section id="carrito-section" class="productos-section view-section">
-    <div class="container" style="padding: 40px 20px; max-width: 800px; margin: 0 auto;">
-        <h2 style="text-align: center; font-family: inherit; margin-bottom: 30px; color: #333;">Mi Carrito de Compras</h2>
-        
-        <div id="cart-items-container" style="background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <section id="pedidos-section" class="productos-section view-section hidden">
+        <div class="container" style="padding: 40px 20px; max-width: 800px; margin: 0 auto;">
+            <div class="section-header" style="text-align: center; margin-bottom: 30px;">
+                <span class="section-tag">Seguimiento</span>
+                <h2>Mis Pedidos realizados</h2>
+                <p>Consulta el estado de tus órdenes de formulaciones cosméticas y su despacho de envío.</p>
             </div>
-
-        <div style="background: #fff; margin-top: 20px; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
-            <div style="font-size: 15px; color: #666;">Subtotal: <span id="cart-subtotal" style="font-weight: bold; color: #333;">$0.00</span></div>
-            <div style="font-size: 18px; color: #333; font-weight: bold; border-top: 1px solid #eee; padding-top: 10px; width: 100%; text-align: right;"> Total: <span id="cart-total" style="color: #0056b3;">$0.00</span></div>
             
-            <div style="display: flex; gap: 15px; margin-top: 15px; width: 100%; justify-content: flex-end;">
-                <button class="btn btn-outline" style="border: 1px solid #ccc; background: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;" onclick="clearCart()">Vaciar carrito</button>
-                <button class="btn btn-dark" style="padding: 10px 25px; border-radius: 6px;" onclick="alert('Procediendo al pago seguro...')">Proceder al Pago</button>
+            <div id="pedidos-container" style="background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 15px;">📦</div>
+                <h3 style="color: #555; margin-bottom: 10px;">No has realizado ningún pedido aún</h3>
+                <p style="color: #888; font-size: 14px;">Tus compras confirmadas aparecerán listadas en este panel con sus detalles de rastreo.</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
-<!-- ==========================================================================
-   NUEVA SECCIÓN: MIS FAVORITOS
-   ========================================================================== -->
-<section id="favoritos-section" class="productos-section hidden" style="margin-top: 50px;">
-    <div class="container">
-        <div class="section-header">
-            <span class="section-tag">Tu Colección</span>
-            <h2>Mis Favoritos</h2>
-            <p>Los productos seleccionados para el cuidado óptimo de tu piel.</p>
-        </div>
-        
-        <!-- Aquí se renderizarán los productos que marques con corazón -->
-        <div id="favoritos-grid" class="productos-grid">
-            <!-- El JavaScript meterá el mensaje elegante o las tarjetas aquí -->
-        </div>
-    </div>
-</section>
-
-    <!-- VISTA EXCLUSIVA FASE 2: TRATAMIENTOS FACIALES -->
     <section id="tratamientos" class="tratamientos-section view-section hidden">
         <div class="container">
             <div class="section-header">
@@ -259,12 +247,10 @@ EN FASE 2 -->
                 <p>Procedimientos estéticos de grado dermatológico diseñados para potenciar la renovación celular, higienizar profundamente y acelerar los resultados de tu rutina diaria.</p>
             </div>
             <div id="tratamientos-carousel" class="tratamientos-carousel-grid">
-                <!-- Inyección dinámica desde script.js -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- VISTA: GLOSARIO DE ACTIVOS -->
     <section id="glosario" class="glosario-section view-section hidden">
         <div class="container">
             <div class="educational-intro">
@@ -278,12 +264,10 @@ EN FASE 2 -->
                 </div>
             </div>
             <div id="glosario-grid" class="glosario-grid">
-                <!-- Tarjetas inyectadas dinámicamente -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- VISTA: ACORDEÓN DE MITOS -->
     <section id="mitos" class="mitos-section view-section hidden">
         <div class="container-sm">
             <div class="section-header">
@@ -292,12 +276,10 @@ EN FASE 2 -->
                 <p>Desmitificando las corrientes comerciales mediante la confrontación con estudios dermatológicos.</p>
             </div>
             <div id="mitos-accordion" class="accordion-container">
-                <!-- Acordeones dinámicos -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- VISTA: TELEGRAM BOT -->
     <section id="telegram" class="telegram-section view-section hidden">
         <div class="container">
             <div class="telegram-card">
@@ -323,7 +305,6 @@ EN FASE 2 -->
         </div>
     </section>
 
-    <!-- MODAL DE ACTIVOS -->
     <div id="ingredient-modal" class="modal-overlay">
         <div class="modal-box">
             <button id="modal-close-btn" class="modal-close">&times;</button>
@@ -337,7 +318,6 @@ EN FASE 2 -->
         </div>
     </div>
 
-    <!-- MODAL DE DETALLES DE PRODUCTOS -->
     <div id="product-modal" class="modal-overlay">
         <div class="modal-box">
             <button id="product-modal-close-btn" class="modal-close">&times;</button>
@@ -359,7 +339,6 @@ EN FASE 2 -->
         </div>
     </div>
 
-    <!-- FOOTER GENERAL -->
     <footer class="main-footer">
         <div class="container">
             <div class="footer-grid">

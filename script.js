@@ -47,7 +47,7 @@ const PROFILES_MATRIX = {
     },
     seca: {
         title: "Piel Seca (Alipídica)",
-        description: "Presentas un déficit cuantitativo de lípidos estructurales en la barrera córnea. Esto compromete la retención de agua transepidérmica, derivando en un tejido con tendencia a líneas finas.",
+        description: "Presentas un déficit quantitative de lípidos estructurales en la barrera córnea. Esto compromete la retención de agua transepidérmica, derivando en un tejido con tendencia a líneas finas.",
         guidelines: ["Evitar agentes tensioactivos agresivos o limpiadores espumosos.", "Aportar fórmulas ricas en ácidos grasos y ceramidas para sellar la barrera.", "Aplicar humectantes sobre el tejido ligeramente húmedo."],
         metrics: { hydration: 25, sensitivity: 45, sebum: 15 },
         ingredients: ["Ácido hialurónico", "Ceramidas", "Péptidos"],
@@ -88,7 +88,7 @@ const MYTHS_ACCORDION = [
     { mito: "El uso de protector solar se limita a la exposición solar directa de verano.", realidad: "Falso. El uso de radiación UVA es constante a lo largo de todo el año y penetra a través de nubosidades y cristales." }
 ];
 
-// --- NUEVA DATA DE PRODUCTOS (FASE 1) ---
+// --- DATA DE PRODUCTOS ---
 const PRODUCTS_DB = [
     { id: 1, name: "Gel Limpiador Purificante Seboregulador", brand: "DermaLab", cat: "Limpiadores", price: "$420.00", skin: "Grasa, Mixta", ingredients: "Ácido Salicílico 2%, Zinc PCA", benefits: "Controla el exceso de sebo y desobstruye los poros sin resecar la barrera.", rating: 5, img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=600" },
     { id: 2, name: "Sérum Renovador Retinol Clínico 0.3%", brand: "SkinScience", cat: "Sérums", price: "$680.00", skin: "Seca, Mixta, Grasa", ingredients: "Retinol Puro 0.3%, Vitamina E", benefits: "Acelera la renovación celular y disminuye visiblemente las líneas de expresión.", rating: 4, img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600" },
@@ -110,6 +110,7 @@ const DAILY_ALERTS = [
 let currentStep = 0;
 let scoreAccumulator = { grasa: 0, seca: 0, mixta: 0, sensible: 0 };
 let activeSectionId = "hero";
+let pedidosRealizados = []; // Almacén en tiempo real para el historial
 
 function navigateTo(targetSectionId) {
     if (activeSectionId === targetSectionId) return;
@@ -125,6 +126,7 @@ function navigateTo(targetSectionId) {
         currentSection.classList.add('hidden');
         currentSection.style.display = 'none';
 
+        // Control Estricto del Carrito
         if (targetSectionId !== 'carrito-section') {
             const cartSec = document.getElementById('carrito-section');
             if (cartSec) {
@@ -132,10 +134,21 @@ function navigateTo(targetSectionId) {
                 cartSec.style.display = 'none';
             }
         }
-            const favSec = document.getElementById('favoritos-section');
-            if (favSec) {
-                if (targetSectionId === 'productos') {
-                favSec.classList.add('hidden');
+
+        // Control Estricto de la Nueva Sección de Pedidos
+        if (targetSectionId !== 'pedidos-section') {
+            const pedSec = document.getElementById('pedidos-section');
+            if (pedSec) {
+                pedSec.classList.add('hidden');
+                pedSec.style.display = 'none';
+            }
+        }
+
+        // CONTROL AUTOMÁTICO DE FAVORITOS (Únicamente abajo de la tienda)
+        const favSec = document.getElementById('favoritos-section');
+        if (favSec) {
+            if (targetSectionId === 'productos') {
+                favSec.classList.remove('hidden');
                 favSec.style.display = 'block';
             } else { 
                 favSec.classList.add('hidden');
@@ -144,7 +157,7 @@ function navigateTo(targetSectionId) {
         }
         
         nextSection.classList.remove('hidden');
-        nextSection.style.display = 'block'; // Forzamos a que aparezca en pantalla
+        nextSection.style.display = 'block';
         
         setTimeout(() => {
             nextSection.classList.add('view-active');
@@ -169,7 +182,8 @@ function initApp() {
     checkSavedAnalysis();
     setupCoreEvents();
     renderTreatments();
-    initFavoritos(); // Inicialización de los favoritos integrada limpia
+    initFavoritos(); 
+    renderPedidos(); // Asegurar el dibujado de las órdenes activas
 }
 
 function renderTip() {
@@ -333,6 +347,73 @@ window.triggerProductModal = function(index) {
     prodModalElement.classList.add('active');
 };
 
+// --- MOTOR DE DESPACHO Y PROCESAMIENTO DE PEDIDOS ---
+window.processOrderCheckout = function() {
+    // Si la función global "getCartItems" existe y el carrito está vacío, frenamos.
+    if (typeof cart !== 'undefined' && cart.length === 0) {
+        alert("Tu carrito está vacío. Añade productos antes de pagar.");
+        return;
+    }
+
+    const totalTexto = document.getElementById('cart-total')?.innerText || "$0.00";
+    
+    // Crear un objeto de pedido simulado con alta fidelidad cosmética
+    const nuevoPedido = {
+        id: `ORD-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+        fecha: new Date().toLocaleDateString('es-MX'),
+        total: totalTexto,
+        status: "En preparación de laboratorio",
+        icon: "🧪"
+    };
+
+    pedidosRealizados.unshift(nuevoPedido); // Insertar al inicio de la lista
+    renderPedidos();
+    
+    // Vaciar el carrito usando la función nativa que tengas en la parte 2
+    if (typeof clearCart === 'function') {
+        clearCart();
+    } else if (typeof cart !== 'undefined') {
+        cart = [];
+        if (typeof updateCartUI === 'function') updateCartUI();
+    }
+
+    alert(`¡Pago Seguro Confirmado!\nSu orden ${nuevoPedido.id} ha sido enviada al laboratorio de control dérmico.`);
+    navigateTo('pedidos-section'); // Redirección inmediata al historial
+};
+
+function renderPedidos() {
+    const container = document.getElementById('pedidos-container');
+    if (!container) return;
+
+    if (pedidosRealizados.length === 0) {
+        container.innerHTML = `
+            <div style="font-size: 48px; margin-bottom: 15px;">📦</div>
+            <h3 style="color: #555; margin-bottom: 10px;">No has realizado ningún pedido aún</h3>
+            <p style="color: #888; font-size: 14px;">Tus compras confirmadas aparecerán listadas en este panel con sus detalles de rastreo.</p>
+        `;
+        return;
+    }
+
+    let html = `<div style="display: flex; flex-direction: column; gap: 15px; text-align: left;">`;
+    pedidosRealizados.forEach(ped => {
+        html += `
+            <div style="border: 1px solid #eee; padding: 20px; border-radius: 10px; background: #fafafa; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                <div>
+                    <span style="font-size: 11px; background: #e0dbff; color: #6c5ce7; padding: 3px 8px; border-radius: 20px; font-weight: bold; text-transform: uppercase;">${ped.id}</span>
+                    <h4 style="margin: 8px 0 4px 0; color: #333;">Estado: ${ped.icon} ${ped.status}</h4>
+                    <p style="margin: 0; font-size: 13px; color: #777;">Fecha de solicitud: ${ped.fecha}</p>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 16px; font-weight: bold; color: #2ecc71;">${ped.total}</span>
+                    <p style="margin: 5px 0 0 0; font-size: 12px; color: #aaa;">Envío prioritario</p>
+                </div>
+            </div>
+        `;
+    });
+    html += `</div>`;
+    container.innerHTML = html;
+}
+
 if(document.getElementById('product-modal-close-btn')) {
     document.getElementById('product-modal-close-btn').addEventListener('click', () => {
         prodModalElement.classList.remove('active');
@@ -476,7 +557,7 @@ function renderMitos() {
     });
 }
 
-// --- CONTENIDO EXCLUSIVO FASE 2: TRATAMIENTOS FACIALES ---
+// --- TRATAMIENTOS FACIALES ---
 const TREATMENTS_DB = [
     { id: 1, name: "Limpieza Facial Profunda", desc: "Higienización clínica que elimina impurezas, células muertas y comedones mediante exfoliación ultrasónica.", benefits: "Desobstruye poros, purifica el estrato córneo y unifica la textura.", duration: "60 min", skin: "Todos los biotipos", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop" },
     { id: 2, name: "Hydrafacial Professional", desc: "Tratamiento hidro-dermoabrasivo de grado médico que combina limpieza, exfoliación, extracción e hidratación simultánea.", benefits: "Luminosidad inmediata, hidratación celular profunda y suavizado de líneas.", duration: "45 min", skin: "Todos los biotipos (ideal deshidratadas)", rating: 5, img: "https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=600" },
@@ -485,7 +566,7 @@ const TREATMENTS_DB = [
     { id: 5, name: "Radiofrecuencia Facial", desc: "Emisión de ondas electromagnéticas que generan calor profundo en la dermis, estimulando la producción de nuevo colágeno.", benefits: "Efecto tensor inmediato, remodelación del óvalo facial y mayor firmeza.", duration: "50 min", skin: "Flácida, Seca, Envejecida", rating: 5, img: "https://images.pexels.com/photos/5069612/pexels-photo-5069612.jpeg?auto=compress&cs=tinysrgb&w=600" },
     { id: 6, name: "Peeling Químico Clínico", desc: "Aplicación controlada de hidroxiácidos para descamar capas específicas de la epidermis y renovar el tejido.", benefits: "Tratamiento intensivo contra manchas, secuelas de acné y líneas de expresión.", duration: "30 min", skin: "Grasa, Mixta, Hiperpigmentada", rating: 5, img: "https://images.pexels.com/photos/5240668/pexels-photo-5240668.jpeg?auto=compress&cs=tinysrgb&w=600" },
     { id: 7, name: "Alta Frecuencia Antiséptica", desc: "Aplicación de corriente alterna mediante electrodos de vidrio que generan ozono con propiedades bactericidas y calmantes.", benefits: "Cierra poros, reduce la inflamación por acné y acelera la cicatrización.", duration: "20 min", skin: "Grasa, Acneica, Reactiva", rating: 4, img: "https://images.pexels.com/photos/3985292/pexels-photo-3985292.jpeg?auto=compress&cs=tinysrgb&w=600" },
-    { id: 8, name: "Masaje Facial Drenante Miofascial", desc: "Manipulaciones técnicas manuales orientadas a relajar la musculatura del rostro y estimular el drenaje linfático.", benefits: "Desinflama las facciones, elimina toxinas y alivia la tensión acumulada.", duration: "45 min", skin: "Todos los biotipos (ideal fatigadas)", rating: 5, img: "https://images.pexels.com/photos/3762466/pexels-photo-3762466.jpeg?auto=compress&cs=tinysrgb&w=600" }
+    { id: 8, name: "Masaje Facial Drenante Miofascial", desc: "Manipulaciones técnicas manuales orientadas a relajar la musculatura del rostro y estimular el drenaje linfático.", benefits: "Desinflama las facciones, elimina toxinas y alivia la tensión acumulada.", duration: "45 min", skin: "Todos los biotipos (ideal fatigued)", rating: 5, img: "https://images.pexels.com/photos/3762466/pexels-photo-3762466.jpeg?auto=compress&cs=tinysrgb&w=600" }
 ];
 
 function renderTreatments() {
@@ -510,7 +591,7 @@ function renderTreatments() {
     `).join('');
 }
 
-// --- LOGICA DE FAVORITOS (LOCALSTORAGE Y SECCIÓN COMPLEMENTARIA) ---
+// --- LOGICA DE FAVORITOS ---
 let favoritosIds = JSON.parse(localStorage.getItem('glowguide_favs')) || [];
 
 function initFavoritos() {
@@ -539,12 +620,16 @@ function toggleFavorito(idProducto, boton) {
     
     if (index === -1) {
         favoritosIds.push(idProducto);
-        boton.innerHTML = "♥";
-        boton.classList.add("active");
+        if(boton) {
+            boton.innerHTML = "♥";
+            boton.classList.add("active");
+        }
     } else {
         favoritosIds.splice(index, 1);
-        boton.innerHTML = "♡";
-        boton.classList.remove("active");
+        if(boton) {
+            boton.innerHTML = "♡";
+            boton.classList.remove("active");
+        }
     }
 
     localStorage.setItem('glowguide_favs', JSON.stringify(favoritosIds));
@@ -556,6 +641,7 @@ function toggleFavorito(idProducto, boton) {
     }
 
     actualizarContadorFavs();
+    marcarCorazonesActivos(); // Sincroniza la tienda al instante
     renderFavoritosSection();
 }
 
@@ -593,16 +679,13 @@ function renderFavoritosSection() {
     favGrid.innerHTML = "";
 
     if (favoritosIds.length === 0) {
-        favGrid.innerHTML = `<div class="fav-empty-message">Aún no has agregado productos a favoritos.</div>`;
-        if (favSection) favSection.classList.add("hidden");
+        favGrid.innerHTML = `<div class="fav-empty-message" style="grid-column: 1/-1; text-align: center; color: #aaa; padding: 20px;">Aún no has agregado productos a favoritos.</div>`;
         return;
     }
 
-    if (favSection) favSection.classList.remove("hidden");
-
     const todasLasTarjetas = document.querySelectorAll("#productos-grid .producto-card");
     
-    todasLasTarjetas.forEach(tarjeta => {
+    todasLasTarjetas.forEach((tarjeta, index) => {
         const tituloContenedor = tarjeta.querySelector(".producto-title");
         if (tituloContenedor) {
             const titulo = tituloContenedor.innerText;
@@ -610,8 +693,7 @@ function renderFavoritosSection() {
             if (favoritosIds.includes(titulo)) {
                 const clon = tarjeta.cloneNode(true);
                 
-                // Remover el botón de "Agregar al Carrito" o cualquier elemento extra si quisieras, 
-                // pero como mantendremos el diseño idéntico, solo reactivamos su evento.
+                // Reconectar el botón del corazón del clon
                 const clonBtn = clon.querySelector(".btn-outline-fav");
                 if (clonBtn) {
                     clonBtn.innerHTML = "♥";
@@ -619,22 +701,16 @@ function renderFavoritosSection() {
                     
                     clonBtn.addEventListener("click", (e) => {
                         e.preventDefault();
-                        // Desmarcar en la tienda principal y actualizar todo
-                        todasLasTarjetas.forEach(t => {
-                            if (t.querySelector(".producto-title").innerText === titulo) {
-                                const btnOriginal = t.querySelector(".btn-outline-fav");
-                                toggleFavorito(titulo, btnOriginal);
-                            }
-                        });
+                        toggleFavorito(titulo, null);
                     });
                 }
                 
-                // Sincronizar el botón de detalles del clon para que no rompa el modal
-                const clonDetallesBtn = clon.querySelector(".btn-xs");
+                // Reconectar botón "Ver detalles" del clon
+                const clonDetallesBtn = clon.querySelector(".btn-secondary.btn-xs");
                 if (clonDetallesBtn) {
-                    // Mantiene el atributo onclick original apuntando al index correcto
                     clonDetallesBtn.addEventListener("click", (e) => {
                         e.preventDefault();
+                        triggerProductModal(index);
                     });
                 }
 
@@ -644,35 +720,26 @@ function renderFavoritosSection() {
     });
 }
 
-// =========================================================================
-// --- SISTEMA DE CARRITO DE COMPRAS PROFESIONAL (GLOWGUIDE) ---
-// =========================================================================
-
+// --- SISTEMA DE CARRITO DE COMPRAS ---
 let cart = JSON.parse(localStorage.getItem('gg_cart')) || [];
 
-// 1. Inicializar eventos del carrito al cargar la app
 document.addEventListener("DOMContentLoaded", () => {
     updateCartCounter();
     renderCart();
     setupCartEvents();
 });
 
-// 2. Configurar el evento de click en los botones "Agregar al Carrito" existentes
 function setupCartEvents() {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
 
-    // Escuchamos los clicks en el contenedor principal para no interferir con tu renderProducts()
     grid.addEventListener('click', (e) => {
         if (e.target && e.target.classList.contains('producto-btn-cart')) {
-            // Buscamos el botón "Ver detalles" de la misma tarjeta para obtener el index del producto
-            const actionsDiv = e.target.previousElementSibling;
-            const detailBtn = actionsDiv ? actionsDiv.querySelector('button[onclick^="triggerProductModal"]') : null;
-            
-            if (detailBtn) {
-                const match = detailBtn.getAttribute('onclick').match(/\d+/);
-                if (match) {
-                    const productIndex = parseInt(match[0], 10);
+            const card = e.target.closest('.producto-card');
+            if (card) {
+                const titulo = card.querySelector('.producto-title').innerText;
+                const productIndex = PRODUCTS_DB.findIndex(p => p.name === titulo);
+                if (productIndex !== -1) {
                     addToCart(productIndex, e.target);
                 }
             }
@@ -680,12 +747,10 @@ function setupCartEvents() {
     });
 }
 
-// 3. Función Principal: Agregar Producto al Carrito
 window.addToCart = function(productIndex, buttonElement) {
     const product = PRODUCTS_DB[productIndex];
     if (!product) return;
 
-    // Verificar si ya existe en el carrito
     const existingItem = cart.find(item => item.id === product.id);
 
     if (existingItem) {
@@ -701,12 +766,10 @@ window.addToCart = function(productIndex, buttonElement) {
         });
     }
 
-    // Guardar en LocalStorage y actualizar
     localStorage.setItem('gg_cart', JSON.stringify(cart));
     updateCartCounter();
     renderCart();
 
-    // Animación Premium en el botón
     if (buttonElement) {
         const originalText = buttonElement.innerText;
         buttonElement.innerText = "¡Agregado! ✓";
@@ -723,7 +786,6 @@ window.addToCart = function(productIndex, buttonElement) {
     }
 };
 
-// 4. Actualizar Contador Visual del Carrito (Busca un elemento con id="cart-counter")
 function updateCartCounter() {
     const counterEl = document.getElementById('cart-counter');
     if (!counterEl) return;
@@ -732,7 +794,6 @@ function updateCartCounter() {
     counterEl.style.display = totalItems > 0 ? "inline-block" : "none";
 }
 
-// 5. Renderizar la sección "Mi Carrito" de forma reactiva
 function renderCart() {
     const cartContainer = document.getElementById('cart-items-container');
     if (!cartContainer) return;
@@ -776,7 +837,6 @@ function renderCart() {
     updateCartTotals(subtotal);
 }
 
-// 6. Cambiar cantidades (+) y (-)
 window.changeCartQuantity = function(index, delta) {
     cart[index].quantity += delta;
     if (cart[index].quantity <= 0) {
@@ -787,7 +847,6 @@ window.changeCartQuantity = function(index, delta) {
     renderCart();
 };
 
-// 7. Eliminar un producto por completo
 window.removeFromCart = function(index) {
     cart.splice(index, 1);
     localStorage.setItem('gg_cart', JSON.stringify(cart));
@@ -795,7 +854,6 @@ window.removeFromCart = function(index) {
     renderCart();
 };
 
-// 8. Vaciar todo el carrito
 window.clearCart = function() {
     cart = [];
     localStorage.removeItem('gg_cart');
@@ -803,7 +861,6 @@ window.clearCart = function() {
     renderCart();
 };
 
-// 9. Actualizar los bloques de Totales
 function updateCartTotals(subtotal) {
     const subtotalEl = document.getElementById('cart-subtotal');
     const totalEl = document.getElementById('cart-total');
@@ -811,4 +868,3 @@ function updateCartTotals(subtotal) {
     if (subtotalEl) subtotalEl.innerText = `$${subtotal.toFixed(2)}`;
     if (totalEl) totalEl.innerText = `$${subtotal.toFixed(2)}`;
 }
-     

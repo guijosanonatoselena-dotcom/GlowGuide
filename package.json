@@ -1,7 +1,7 @@
 {
   "name": "glowguide-webservice",
   "version": "1.0.0",
-  "description": "Sistema de Análisis Dérmico Profesional - GlowGuide",
+  "description": "Plataforma GlowGuide con extensión de asistente en Telegram",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -15,7 +15,9 @@
   "author": "Selena Guijosa",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+  "dotenv": "^16.4.5",
+   "express": "^4.19.2"
+   "node-telegram-bot-api": "^0.66.0"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -727,7 +727,6 @@ function renderFavoritosSection() {
         }
     });
 }
-
     const todasLasTarjetas = document.querySelectorAll("#productos-grid .producto-card");
     
     todasLasTarjetas.forEach((tarjeta, index) => {

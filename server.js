@@ -1,3 +1,6 @@
+// 1. Cargar las variables de entorno seguras del archivo .env al inicio
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -20,6 +23,12 @@ app.use((req, res, next) => {
 
 // Servir de forma estática los archivos locales base (script.js, style.css)
 app.use(express.static(path.join(__dirname)));
+
+// ==========================================
+// 2. INTEGRACIÓN DEL BOT DE TELEGRAM
+// ==========================================
+console.log('🤖 Iniciando conexión con Telegram...');
+require('./bot.js'); 
 
 // Enrutador comodín para el funcionamiento de la SPA (Single Page Application)
 app.get('*', (req, res) => {

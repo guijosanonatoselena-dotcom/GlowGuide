@@ -123,7 +123,25 @@ function navigateTo(targetSectionId) {
 
     setTimeout(() => {
         currentSection.classList.add('hidden');
+        currentSection.style.display = 'none';
+
+        if (targetSectionId !== 'carrito-section') {
+            const cartSec = document.getElementById('carrito-section');
+            if (cartSec) {
+                cartSec.classList.add('hidden');
+                cartSec.style.display = 'none';
+            }
+        }
+        if (targetSectionId !== 'favoritos-section') {
+            const favSec = document.getElementById('favoritos-section');
+            if (favSec) {
+                favSec.classList.add('hidden');
+                favSec.style.display = 'none';
+            }
+        }
+        
         nextSection.classList.remove('hidden');
+        nextSection.style.display = 'block'; // Forzamos a que aparezca en pantalla
         
         setTimeout(() => {
             nextSection.classList.add('view-active');
@@ -131,19 +149,9 @@ function navigateTo(targetSectionId) {
         }, 20);
 
         activeSectionId = targetSectionId;
-const favSection = document.getElementById("favoritos-section");
-        if (favSection) {
-            // Si el usuario entra a tratamientos (o al test/glosario), ocultamos favoritos por completo
-            if (targetSectionId === "tratamientos" || targetSectionId === "test" || targetSectionId === "glosario") {
-                favSection.style.display = "none";
-            } else {
-                // En la tienda o el inicio los volvemos a mostrar de forma natural
-                favSection.style.display = "";
-            }
-        }
     }, 350);
 }
-
+       
 // --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
     initApp();
@@ -304,12 +312,6 @@ function renderProducts() {
         `;
         grid.appendChild(card);
     });
-
-const favSection = document.getElementById("favoritos-section");
-    if (favSection) {
-        favSection.style.position = "relative";
-        favSection.style.clear = "both";
-    }
 }
 
 // MODAL PARA MOSTRAR DETALLES DE PRODUCTO

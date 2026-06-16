@@ -197,7 +197,6 @@ function renderQuiz() {
 window.captureStepAnswer = function(optionIdx) {
     const selectedPoints = SKIN_QUIZ[currentStep].options[optionIdx].points;
     for (let skinType in selectedPoints) {
-        scoreAccumulator[skinType] += selectedPoints[selectedPoints];
         scoreAccumulator[skinType] += selectedPoints[skinType];
     }
     currentStep++;
@@ -387,6 +386,7 @@ function setupCoreEvents() {
             navMenu.classList.toggle('mobile-active');
         });
     }
+}
 
 // --- GLOSARIO & MITOS ---
 function renderGlossary() {
@@ -636,6 +636,7 @@ function renderFavoritosSection() {
                 favGrid.appendChild(clon);
             }
          }
+    });
 }
 
 // =========================================================================

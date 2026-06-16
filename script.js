@@ -559,7 +559,7 @@ function renderMitos() {
 
 // --- TRATAMIENTOS FACIALES ---
 const TREATMENTS_DB = [
-    { id: 1, name: "Limpieza Facial Profunda", desc: "Higienización clínica que elimina impurezas, células muertas y comedones mediante exfoliación ultrasónica.", benefits: "Desobstruye poros, purifica el estrato córneo y unifica la textura.", duration: "60 min", skin: "Todos los biotipos", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop" },
+    { id: 1, name: "Limpieza Facial Profunda", desc: "Higienización clínica que elimina impurezas, células muertas y comedones mediante exfoliación ultrasónica.", benefits: "Desobstruye poros, purifica el estrato cóneo y unifica la textura.", duration: "60 min", skin: "Todos los biotipos", rating: 5, img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop" },
     { id: 2, name: "Hydrafacial Professional", desc: "Tratamiento hidro-dermoabrasivo de grado médico que combina limpieza, exfoliación, extracción e hidratación simultánea.", benefits: "Luminosidad inmediata, hidratación celular profunda y suavizado de líneas.", duration: "45 min", skin: "Todos los biotipos (ideal deshidratadas)", rating: 5, img: "https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=600" },
     { id: 3, name: "Dermaplaning Clínico", desc: "Exfoliación física controlada mediante bisturí dermatológico para retirar el vello facial fino y el estrato córneo acumulado.", benefits: "Máxima suavidad cutánea y optimización absoluta en la absorción de activos.", duration: "40 min", skin: "Seca, Mixta, Opaca", rating: 4, img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=600&auto=format&fit=crop" },
     { id: 4, name: "Microdermoabrasión con Punta de Diamante", desc: "Peeling mecánico de alta precisión que desgasta las capas superficiales de la piel dañada, estimulando la regeneración celular.", benefits: "Atenúa cicatrices superficiales, manchas y suaviza irregularidades.", duration: "50 min", skin: "Grasa, Mixta, Envejecida", rating: 4, img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=600&auto=format&fit=crop" },
@@ -670,6 +670,7 @@ function marcarCorazonesActivos() {
         }
     });
 }
+
 function renderFavoritosSection() {
     const favGrid = document.getElementById("favoritos-grid");
     const favSection = document.getElementById("favoritos-section");
@@ -725,42 +726,6 @@ function renderFavoritosSection() {
 
             favGrid.appendChild(card);
         }
-    });
-}
-    const todasLasTarjetas = document.querySelectorAll("#productos-grid .producto-card");
-    
-    todasLasTarjetas.forEach((tarjeta, index) => {
-        const tituloContenedor = tarjeta.querySelector(".producto-title");
-        if (tituloContenedor) {
-            const titulo = tituloContenedor.innerText;
-            
-            if (favoritosIds.includes(titulo)) {
-                const clon = tarjeta.cloneNode(true);
-                
-                // Reconectar el botón del corazón del clon
-                const clonBtn = clon.querySelector(".btn-outline-fav");
-                if (clonBtn) {
-                    clonBtn.innerHTML = "♥";
-                    clonBtn.classList.add("active");
-                    
-                    clonBtn.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        toggleFavorito(titulo, null);
-                    });
-                }
-                
-                // Reconectar botón "Ver detalles" del clon
-                const clonDetallesBtn = clon.querySelector(".btn-secondary.btn-xs");
-                if (clonDetallesBtn) {
-                    clonDetallesBtn.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        triggerProductModal(index);
-                    });
-                }
-
-                favGrid.appendChild(clon);
-            }
-         }
     });
 }
 
